@@ -1,0 +1,1 @@
+Every developer have to push their code in their own named branch and have the access to pull the code . The responsibility to merge branches in main branch is of team leader so without permission the other developer can't push the their respective code in the main branch.dfsfsdfdsfsd
