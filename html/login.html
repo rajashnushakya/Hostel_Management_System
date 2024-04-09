@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="login.css" />
+  <link rel="stylesheet" href="../css/login.css" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
   <title>Hostel Management System</title>
 </head>
 <body>
   <div class="container" id="container">
     <div class="form-container sign-up-container">
-      <form action="#">
+      <form action="../php/login_process.php" method="post">
         <h1 id="vit">Hostel Management System</h1>
         <input type="text" placeholder="Name" id="name" />
         <input type="email" placeholder="Email" id="mail"  />
@@ -26,7 +26,7 @@
       </form>
     </div>
     <div class="form-container sign-in-container">
-      <form action="#">
+      <form action="../php/siginup_process.php" method="post">
         <h1>Sign In</h1>
         <input type="email" placeholder="Email" id="mail" />
         <input type="password" placeholder="Password" id="pass" />
@@ -58,6 +58,6 @@
       </div>
     </div>
   </div>
-  <script src="script.js"></script>
+  <script src="../js/script.js"></script>
 </body>
 </html>
