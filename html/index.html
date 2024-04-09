@@ -60,7 +60,7 @@
                 />
 
                 <div class="material-symbolsdashboard-out1"></div>
-                <h3 class="rooms1">Rooms</h3>
+                <h3 class="rooms1" id="Roomid">Rooms</h3>
               </div>
             </div>
             <div class="combiner1">
@@ -592,5 +592,13 @@
         </section>
       </main>
     </div>
+    <script>
+      var hostelsText = document.getElementById("Roomid");
+      if (hostelsText) {
+        hostelsText.addEventListener("click", function (e) {
+          window.location.href = "../html/rooms-occupancy.html";
+        });
+      }
+      </script>
   </body>
 </html>
