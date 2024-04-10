@@ -34,7 +34,7 @@
                   src="../public/materialsymbolsdashboardoutline1.svg"
                 />
 
-                <div class="dashboard4">Dashboard</div>
+                <div class="dashboard4" id = "btn-dash">Dashboard</div>
               </div>
             </div>
             <div class="frame-parent42">
@@ -49,7 +49,7 @@
                     />
 
                     <div class="material-symbolsdashboard-out8"></div>
-                    <div class="rooms11">Rooms</div>
+                    <div class="rooms11" id = "btn-Occ">Rooms</div>
                   </div>
                   <div class="material-symbolsdashboard-out9"></div>
                 </div>
@@ -980,16 +980,33 @@
       var inContainer = document.getElementById("inContainer");
       if (inContainer) {
         inContainer.addEventListener("click", function (e) {
-          // Please sync "attendance in" to the project
+          
         });
       }
       
       var outContainer = document.getElementById("outContainer");
       if (outContainer) {
         outContainer.addEventListener("click", function (e) {
-          // Please sync "attendance out" to the project
+          
         });
       }
+      var dashboard = document.getElementById("btn-dash");
+      if (dashboard) {
+        dashboard.addEventListener("click", function (e) {
+          window.location.href = "../html/index.html";
+        });
+      }
+      var occupancybtn = document.getElementById("btn-Occ");
+    if (occupancybtn) {
+      occupancybtn.addEventListener("click", function () {
+            try {
+                window.location.href = "../html/rooms-occupancy.html";
+            } catch (error) {
+                console.error("Error redirecting to Occupancy:", error);
+            }
+        });
+    } 
+
       </script>
   </body>
 </html>

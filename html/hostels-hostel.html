@@ -35,7 +35,7 @@
                     src="../public/materialsymbolsdashboardoutline1.svg"
                   />
 
-                  <div class="dashboard2">Dashboard</div>
+                  <div class="dashboard2"  id = "btn-dash" >Dashboard</div>
                 </div>
               </div>
               <div class="vector-parent1">
@@ -129,7 +129,7 @@
                   src="../public/phcirclesthreeplusfill.svg"
                 />
 
-                <div class="occupancy2">Occupancy</div>
+                <div class="occupancy2" id = "btn-Occ" >Occupancy</div>
               </div>
             </div>
             <div class="rectangle-parent33">
@@ -337,5 +337,17 @@
         </form>
       </main>
     </div>
+    <script>
+       var occupancybtn = document.getElementById("btn-Occ");
+    if (occupancybtn) {
+      occupancybtn.addEventListener("click", function () {
+            try {
+                window.location.href = "../html/rooms-occupancy.html";
+            } catch (error) {
+                console.error("Error redirecting to Occupancy:", error);
+            }
+        });
+    } 
+    </script>
   </body>
 </html>

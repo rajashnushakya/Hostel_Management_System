@@ -36,7 +36,7 @@
                     src="../public/materialsymbolsdashboardoutline1.svg"
                   />
 
-                  <div class="dashboard3">Dashboard</div>
+                  <div class="dashboard3" id = "btn-dash" >Dashboard</div>
                 </div>
               </div>
               <div class="vector-parent3">
@@ -75,7 +75,7 @@
                     src="../public/materialsymbolscopresentoutlinesharp.svg"
                   />
 
-                  <div class="attendance7">Attendance</div>
+                  <div class="attendance7" id = "btn-Att">Attendance</div>
                 </div>
               </div>
             </div>
@@ -131,7 +131,7 @@
                   src="../public/phcirclesthreeplusfill.svg"
                 />
 
-                <div class="occupancy4">Occupancy</div>
+                <div class="occupancy4" id = "btn-Occ">Occupancy</div>
               </div>
             </div>
             <div class="biboxes2"></div>
@@ -147,7 +147,7 @@
                     />
 
                     <div class="hostels-container">
-                      <div class="hostels1" id="hostelsText">Hostels</div>
+                      <div class="hostels1" id="btn-hostel">Hostels</div>
                     </div>
                   </div>
                 </div>
@@ -320,12 +320,48 @@
     </div>
 
     <script>
-      var hostelsText = document.getElementById("hostelsText");
-      if (hostelsText) {
-        hostelsText.addEventListener("click", function (e) {
-          window.location.href = "../html/hostels-hostel.html";
+      document.addEventListener("DOMContentLoaded", function () {
+    var hostelbutton = document.getElementById("btn-hostel");
+    if (hostelbutton) {
+      hostelbutton.addEventListener("click", function () {
+            try {
+                window.location.href = "../html/hostels-hostel.html";
+            } catch (error) {
+                console.error("Error redirecting to hostels:", error);
+            }
         });
-      }
+    }
+
+    var dashboardButton = document.getElementById("btn-dash");
+    if (dashboardButton) {
+        dashboardButton.addEventListener("click", function () {
+            try {
+                window.location.href = "../html/index.html";
+            } catch (error) {
+                console.error("Error redirecting to dashboard:", error);
+            }
+        });
+    }
+
+    var occupancybtn = document.getElementById("btn-Occ");
+    if (occupancybtn) {
+      occupancybtn.addEventListener("click", function () {
+            try {
+                window.location.href = "../html/rooms-occupancy.html";
+            } catch (error) {
+                console.error("Error redirecting to Occupancy:", error);
+            }
+        });
+    } 
+});
+    var btnAttendance = document.getElementById("btn-Att");
+      if (btnAttendance) {
+        btnAttendance.addEventListener("click", function (e) {
+          window.location.href = "../html/attendance-leave-management.html";
+        });
+      } 
+
+      
       </script>
   </body>
 </html>
