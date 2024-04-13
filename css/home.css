@@ -98,15 +98,6 @@ body {
     text-align: left;
     margin-top: 10px; 
   }
-  
-  /* Add a hover effect */
-  .hero:hover .hero-text {
-    transform: translateY(-20px); /* Move the text up on hover */
-  }
-  
-  .hero:hover img {
-    transform: scale(1.1); /* Zoom in the image on hover */
-  }
 
  /* Photo Section */
 .photos {
