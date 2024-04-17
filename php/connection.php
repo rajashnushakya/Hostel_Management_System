@@ -3,8 +3,8 @@
 // Set your connection variables
 $servername = "localhost";
 $username = "username";
-$password = "password";
-$dbname = "database_name";
+$password = "11shakyaraj";
+$dbname = "hms";
 
 // Create connection
 $conn = new mysqli($servername,
