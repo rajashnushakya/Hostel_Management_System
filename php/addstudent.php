@@ -82,9 +82,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="text" class="form-control" id="permanentAddress" name="permanent_address" placeholder="Enter permanent address">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
-        <button type="button" class="btn btn-secondary">Back</button>
+        <button type="button" class="btn btn-secondary" onclick="goBack()">Back</button>
     </form>
 </div>
+<script>
+    function goBack() {
+        window.location.href = '../html/dashboard-students.html';
+    }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
