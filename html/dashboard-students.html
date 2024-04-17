@@ -237,7 +237,7 @@
                   </div>
                 </div>
                 <div class="profile-card">
-                  <button class="add-student">
+                  <button class="add-student" id="addStudentButton">
                     <div class="add-student-child"></div>
                     <div class="add-student1">+Add Student</div>
                   </button>
@@ -521,6 +521,15 @@
           window.location.href = "../html/rooms-occupancy.html";
         });
       }
+      document.addEventListener("DOMContentLoaded", function () {
+    var addStudentButton = document.getElementById("addStudentButton");
+    if (addStudentButton) {
+      addStudentButton.addEventListener("click", function (e) {
+        e.preventDefault(); 
+        window.location.href = "../php/addstudent.php"; 
+      });
+    }
+  });
       </script>
   </body>
 </html>
