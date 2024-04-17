@@ -138,7 +138,7 @@
                       src="../public/phstudent.svg"
                     />
 
-                    <div class="students">Students</div>
+                    <div class="students" id = "Student">Students</div>
                   </div>
                   <div class="complaints">
                     <img
@@ -609,6 +609,12 @@
       if (btnAttendance) {
         btnAttendance.addEventListener("click", function (e) {
           window.location.href = "../html/attendance-leave-management.html";
+        });
+      }
+      var StudentText = document.getElementById("Student");
+      if (StudentText) {
+        StudentText.addEventListener("click", function (e) {
+          window.location.href = "../html/dashboard-students.html";
         });
       }
       </script>
