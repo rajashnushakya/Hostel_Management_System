@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "11shakyaraj";
 $dbname = "hms";
 
 // Create connection
@@ -9,11 +9,36 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 
 // Check connection
 if (!$conn) {
-    die("Connection failed: " . $conn->connect_error);
-    echo("Cannot connect to db");
-} else {
-    echo "Connected successfully";
+    die("Connection failed: " . mysqli_connect_error());
 }
+
+// Check if the users table exists, and create it if not
+$table_query = "SHOW TABLES LIKE 'users'";
+$table_result = mysqli_query($conn, $table_query);
+
+if (!$table_result) {
+    die("Error checking table: " . mysqli_error($conn));
+}
+
+if ($table_result->num_rows == 0) {
+    $create_table_query = "CREATE TABLE users (
+        ID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        Name VARCHAR(50) NOT NULL,
+        Email VARCHAR(50) NOT NULL,
+        ContactNumber VARCHAR(15) NOT NULL,
+        Password VARCHAR(50) NOT NULL,
+        UserType ENUM('admin', 'resident') NOT NULL
+    )";
+
+    if (mysqli_query($conn, $create_table_query)) {
+        echo "Table 'users' created successfully.<br>";
+    } else {
+        die("Error creating table: " . mysqli_error($conn));
+    }
+}
+
+// Initialize variables
+$signup_message = $login_message = '';
 
 // If form is submitted for sign-up
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['name'], $_POST['mail'], $_POST['contact'], $_POST['pass'], $_POST['user-type'])) {
@@ -27,6 +52,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['name'], $_POST['mail']
     // Check if the email already exists in the database
     $check_query = "SELECT * FROM users WHERE Email=?";
     $check_stmt = $conn->prepare($check_query);
+
+    if (!$check_stmt) {
+        die("Error in check query: " . $conn->error);
+    }
+
     $check_stmt->bind_param("s", $email);
     $check_stmt->execute();
     $check_result = $check_stmt->get_result();
@@ -36,6 +66,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['name'], $_POST['mail']
     } else {
         // Prepare and bind statement to prevent SQL injection
         $stmt = $conn->prepare("INSERT INTO users (Name, Email, ContactNumber, Password, UserType) VALUES (?, ?, ?, ?, ?)");
+
+        if (!$stmt) {
+            die("Error in insert query: " . $conn->error);
+        }
+
         $stmt->bind_param("ssiss", $name, $email, $contact, $userPassword, $userType);
 
         if ($stmt->execute()) {
@@ -47,9 +82,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['name'], $_POST['mail']
         // Close the statement
         $stmt->close();
     }
+
+    // Close the check statement
+    $check_stmt->close();
 }
 
 // If form is submitted for login
+<<<<<<< HEAD
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mail'], $_POST['pass'], $_POST['contact'], $_POST['user-type'])) {
   // Retrieve form data for login
   $email = $_POST['mail'];
@@ -62,6 +101,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mail'], $_POST['pass']
   $stmt->bind_param("ss", $email, $userType);
   $stmt->execute();
   $result = $stmt->get_result();
+=======
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mail'], $_POST['pass'], $_POST['user-type'])) {
+    // Retrieve form data for login
+    $email = $_POST['mail'];
+    $password = $_POST['pass'];
+    $userType = $_POST['user-type'];
+
+    // Prepare and bind statement to prevent SQL injection
+    $stmt = $conn->prepare("SELECT * FROM users WHERE Email=? AND Password=? AND UserType=?");
+
+    if (!$stmt) {
+        die("Error in login query: " . $conn->error);
+    }
+
+    $stmt->bind_param("sss", $email, $password, $userType);
+    $stmt->execute();
+    $result = $stmt->get_result();
+>>>>>>> 75bb28869751281296e4f3d887766b6db2f344d0
 
   if ($result->num_rows > 0) {
       $row = $result->fetch_assoc();
@@ -111,10 +168,16 @@ $conn->close();
         <button type="submit">Sign Up</button> <!-- Added type attribute to button -->
       </form>
       <!-- Display sign-up success/error message -->
+<<<<<<< HEAD
    
 <?php if (isset($signup_message)): ?>
     <p><?php echo $signup_message; ?></p>
 <?php endif; ?>
+=======
+      <?php if (!empty($signup_message)): ?>
+        <p><?php echo $signup_message; ?></p>
+      <?php endif; ?>
+>>>>>>> 75bb28869751281296e4f3d887766b6db2f344d0
 
       <br /><br /><br /><br />
     </div>
@@ -126,7 +189,6 @@ $conn->close();
         <!-- Input fields for login -->
         <input type="email" placeholder="Email" id="mail" name="mail" />
         <input type="password" placeholder="Password" id="pass" name="pass" />
-        <input type="text" placeholder="Contact Number" id="contact" name="contact" /> 
         <select id="user-type" name="user-type">
           <option value="admin">Admin</option>
           <option value="resident">Resident</option>
@@ -134,8 +196,12 @@ $conn->close();
         <button type="submit">Log In</button> 
       </form>
       <!-- Display login success/error message -->
-      <?php if (isset($login_message)): ?>
-        <p><?php echo $login_message; ?></p>
+      <?php if (!empty($login_message)): ?>
+        <?php if ($login_message === "Login successful"): ?>
+          <p style="color: green;"><?php echo $login_message; ?></p>
+        <?php else: ?>
+          <p style="color: red;"><?php echo $login_message; ?></p>
+        <?php endif; ?>
       <?php endif; ?>
       <br /><br /><br /><br /><br /><br />
     </div>
