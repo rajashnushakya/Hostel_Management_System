@@ -51,26 +51,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['name'], $_POST['mail']
 
 // If form is submitted for login
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mail'], $_POST['pass'], $_POST['contact'], $_POST['user-type'])) {
-    // Retrieve form data for login
-    $email = $_POST['mail'];
-    $password = $_POST['pass'];
-    $contact = $_POST['contact'];
-    $userType = $_POST['user-type'];
+  // Retrieve form data for login
+  $email = $_POST['mail'];
+  $password = $_POST['pass'];
+  $contact = $_POST['contact'];
+  $userType = $_POST['user-type'];
 
-    // Prepare and bind statement to prevent SQL injection
-    $stmt = $conn->prepare("SELECT * FROM users WHERE Email=? AND Password=? AND ContactNumber=? AND UserType=?");
-    $stmt->bind_param("ssss", $email, $password, $contact, $userType);
-    $stmt->execute();
-    $result = $stmt->get_result();
+  // Prepare and bind statement to prevent SQL injection
+  $stmt = $conn->prepare("SELECT * FROM users WHERE Email=? AND UserType=?");
+  $stmt->bind_param("ss", $email, $userType);
+  $stmt->execute();
+  $result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        $login_message = "Login successful";
-    } else {
-        $login_message = "Login failed";
-    }
+  if ($result->num_rows > 0) {
+      $row = $result->fetch_assoc();
+      if (password_verify($password, $row['Password'])) {
+          $login_message = "Login successful";
+          // Redirect to dashboard or perform other actions upon successful login
+      } else {
+          $login_message = "Incorrect email or password";
+      }
+  } else {
+      $login_message = "User not found";
+  }
 
-    // Close the statement
-    $stmt->close();
+  // Close the statement
+  $stmt->close();
 }
 
 // Close the database connection
@@ -105,9 +111,9 @@ $conn->close();
         <button type="submit">Sign Up</button> <!-- Added type attribute to button -->
       </form>
       <!-- Display sign-up success/error message -->
-      <!-- Display login success/error message -->
-<?php if (isset($login_message)): ?>
-    <p><?php echo $login_message; ?></p>
+   
+<?php if (isset($signup_message)): ?>
+    <p><?php echo $signup_message; ?></p>
 <?php endif; ?>
 
       <br /><br /><br /><br />
