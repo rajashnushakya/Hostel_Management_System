@@ -20,16 +20,7 @@
 <script type="text/javascript" src="js/validation.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
-function valid()
-{
-if(document.registration.password.value!= document.registration.cpassword.value)
-{
-alert("Password and Re-Type Password Field do not match  !!");
-document.registration.cpassword.focus();
-return false;
-}
-return true;
-}
+
 </script>
 </head>
 <body>
@@ -87,10 +78,10 @@ return true;
 <div class="form-group">
 <label class="col-sm-2 control-label">Role : </label>
 <div class="col-sm-8">
-<select name="gender" class="form-control" required="required">
+<select name="Role" class="form-control" required="required">
 <option value="">Select Role</option>
-<option value="male">Receptionist</option>
-<option value="female">Maintenance Staff</option>
+<option value="Receptionist">Receptionist</option>
+<option value="Maintenance">Maintenance Staff</option>
 </select>
 </div>
 </div>
@@ -152,25 +143,4 @@ return true;
 	<script src="js/chartData.js"></script>
 	<script src="js/main.js"></script>
 </body>
-	<script>
-function checkAvailability() {
-
-$("#loaderIcon").show();
-jQuery.ajax({
-url: "check_availability.php",
-data:'emailid='+$("#email").val(),
-type: "POST",
-success:function(data){
-$("#user-availability-status").html(data);
-$("#loaderIcon").hide();
-},
-error:function ()
-{
-event.preventDefault();
-alert('error');
-}
-});
-}
-</script>
-
 </html>
