@@ -50,6 +50,10 @@ a:hover {
 ****************************/
 .btn {
   font-family: 'Oswald', sans-serif;
+  padding: 15px;
+  margin-top: 20px;
+  position: flex;
+  margin-bottom: 20px;
 }
 .btn i {
   position: relative;
