@@ -58,7 +58,7 @@
           </div>
         </nav>
       </div>
-      <iframe id="iframe-content" src="dashboard.html"></iframe>
+      <iframe id="iframe-content" src="dashbaord.php"></iframe>
     </div>
 
     <script>
@@ -71,19 +71,19 @@
 
       // Add click event listeners to each button
       dashboard.addEventListener("click", () => {
-        iframeContent.src = "dashboard.html";
+        iframeContent.src = "dashboard.php";
       });
 
       announcementBtn.addEventListener("click", () => {
-        iframeContent.src = "announcement.html";
+        iframeContent.src = "announcement.php";
       });
 
       registrationBtn.addEventListener("click", () => {
-        iframeContent.src = "registration.html";
+        iframeContent.src = "registration.php";
       });
 
       roomBtn.addEventListener("click", () => {
-        iframeContent.src = "roomregistration.html";
+        iframeContent.src = "roomregistration.php";
       });
     </script>
     <script src="admin.js"></script>
