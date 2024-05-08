@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Announcement</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <style>
+    .container {
+      padding: 20px;
+    }
+    .announcement-form {
+      margin-bottom: 20px;
+    }
+    .announcement-panel {
+      border: 1px solid #ced4da;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    @media (min-width: 768px) {
+      .announcement-panel {
+        margin-bottom: 0;
+      }
+    }
+    .submit-btn-container {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Announcement</h1>
+
+    <!-- Announcement Form -->
+    <form id="announcementForm" class="announcement-form">
+      <div class="row">
+        <div class="col-md-12 mb-3">
+          <label for="announcementText" class="form-label">Announcement:</label>
+          <textarea class="form-control" id="announcementText" rows="3" required></textarea>
+        </div>
+        <div class="col-md-12 mb-3">
+          <label for="announcementDateTime" class="form-label">Date and Time:</label>
+          <input type="datetime-local" class="form-control" id="announcementDateTime" required>
+        </div>
+      <div class="submit-btn-container">
+        <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+      </div>
+    </form>
+  
+  <script>
+    $(document).ready(function(){
+      // Handle form submission
+      $('#announcementForm').submit(function(event){
+        event.preventDefault(); // Prevent default form submission
+
+        // Get announcement text and date/time
+        var announcementText = $('#announcementText').val();
+        var announcementDateTime = $('#announcementDateTime').val();
+        var recipientType = $('#recipientType').val();
+
+        // Display announcement in the selected panel
+        if (recipientType === 'resident') {
+          $('#residentAnnouncementPanel').append('<div class="alert alert-primary" role="alert">' + announcementText + ' - ' + announcementDateTime + '</div>');
+        } else if (recipientType === 'staff') {
+          $('#staffAnnouncementPanel').append('<div class="alert alert-primary" role="alert">' + announcementText + ' - ' + announcementDateTime + '</div>');
+        }
+
+        // Clear form fields after submission
+        $('#announcementText').val('');
+        $('#announcementDateTime').val('');
+      });
+    });
+  </script>
+</body>
+</html>
