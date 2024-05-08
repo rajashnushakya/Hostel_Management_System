@@ -2,28 +2,42 @@
 
 include('connection.php');
 
-if(isset($_POST['submit'])) {
-    $fname=$_POST['fname'];
-    $mname=$_POST['mname'];
-    $lname=$_POST['lname'];
-    $gender=$_POST['gender'];
-    $contactno=$_POST['contact'];
-    $emailid=$_POST['email'];
-    $password=$_POST['password'];
-    $role = $_POST['Role'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+$fname = $_POST['fname'];
+$mname = $_POST['mname'];
+$lname = $_POST['lname'];
+$gender = $_POST['gender'];
+$contactno = $_POST['contact'];
+$emailid = $_POST['email'];
+$password = $_POST['password'];
+$cpassword = $_POST['cpassword'];
+$role = $_POST['Role'];
+
+// Check if passwords match
+if ($password != $cpassword) {
+    echo "<script>alert('Password and Confirm Password do not match');</script>";
+} else {
+    // Hash the password for security
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    // Include the connection file
+    include 'connection.php';
+
+    // Construct the SQL query with values
+    $query = "INSERT INTO staff (first_name, middle_name, last_name, gender, contact, email, password, role, cpassword) 
+              VALUES ('$fname', '$mname', '$lname', '$gender', '$contactno', '$emailid', '$hashed_password', '$role', '$cpassword')";
     
-    $query="insert into  userRegistration(firstName,middleName,lastName,gender,contactNo,email,password,role) values(?,?,?,?,?,?,?,?)";
-    $stmt = $mysqli->prepare($query);
-    $rc=$stmt->bind_param('sssssiss',$fname,$mname,$lname,$gender,$contactno,$emailid,$password,$role);
-    $stmt->execute();
-    
-    if($stmt->error) {
-        echo "Error: " . $stmt->error;
-    } else {
-        echo "<script>alert('Student Successfully registered');</script>";
-    }
+    // Execute the query
+    if ($mysqli->query($query) === TRUE) {
+		echo "<script>alert('New record inserted successfully');</script>";
+	} else {
+		echo "<script>alert('Failed to insert new record');</script>";
+	}
+}
+$mysqli->close();
 }
 ?>
+
 
 
 <!doctype html>
