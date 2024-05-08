@@ -1,8 +1,12 @@
 <?php
 
 include('connection.php');
+session_start(); 
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+$emailid = $_SESSION['email'];
+$cpasswordd = $_SESSION['cpassword'];
 $fname = $_POST['fname'];
 $mname = $_POST['mname'];
 $lname = $_POST['lname'];
@@ -50,14 +54,14 @@ $mysqli->close();
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
 	<title>User Registration</title>
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">>
-	<link rel="stylesheet" href="css/bootstrap-social.css">
-	<link rel="stylesheet" href="css/bootstrap-select.css">
-	<link rel="stylesheet" href="css/fileinput.min.css">
-	<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="less/font-awesome.min.css">
+	<link rel="stylesheet" href="less/bootstrap1.min.css">
+	<link rel="stylesheet" href="less/dataTables.bootstrap.min.css">
+	<link rel="stylesheet" href="less/bootstrap-social.css">
+	<link rel="stylesheet" href="less/bootstrap-select.css">
+	<link rel="stylesheet" href="less/fileinput.min.css">
+	<link rel="stylesheet" href="less/awesome-bootstrap-checkbox.css">
+	<link rel="stylesheet" href="less/style1.css">
 <script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
 <script type="text/javascript" src="js/validation.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
@@ -174,7 +178,7 @@ return true;
 
 <div class="col-sm-6 col-sm-offset-4">
 <button class="btn btn-default" type="submit">Cancel</button>
-<input type="submit" name="submit" Value="Register" class="btn btn-primary">
+<input type="submit" action="../php/read.php"name="submit" Value="Register" class="btn btn-primary">
 </div>
 </form>
 
@@ -198,7 +202,7 @@ return true;
 	<script src="js/Chart.min.js"></script>
 	<script src="js/fileinput.js"></script>
 	<script src="js/chartData.js"></script>
-	<script src="js/main.js"></script>
+	<script src="js/main1.js"></script>
 </body>
 	<script>
 function checkAvailability() {

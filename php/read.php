@@ -7,8 +7,8 @@ header('Access-Control-Allow-Headers: Content-Type, Acces-Control-Allow-Headers,
 
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 if($requestMethod == 'GET') {
-    $residentList = getResidentList();
-    echo $residentList;
+    $message = 'Successful';
+    echo $message;
 }else{
     $data = $data = [
         'status' => 405,
