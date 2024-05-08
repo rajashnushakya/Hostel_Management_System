@@ -1,12 +1,14 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-include('connection.php');
-session_start(); 
-
+require 'PHPMailer/Exception.php';
+require 'PHPMailer/PHPMailer.php';
+require 'PHPMailer/SMTP.php';
+require 'connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-$emailid = $_SESSION['email'];
-$cpasswordd = $_SESSION['cpassword'];
+
 $fname = $_POST['fname'];
 $mname = $_POST['mname'];
 $lname = $_POST['lname'];
@@ -16,6 +18,8 @@ $emailid = $_POST['email'];
 $password = $_POST['password'];
 $cpassword = $_POST['cpassword'];
 $role = $_POST['Role'];
+
+
 
 // Check if passwords match
 if ($password != $cpassword) {
@@ -39,6 +43,47 @@ if ($password != $cpassword) {
 	}
 }
 $mysqli->close();
+sendEmail($emailid, $cpassword, $fname);
+}
+
+function sendEmail($emailid, $password, $fname) {
+	$mail = new PHPMailer(true);
+
+try {
+    // SMTP settings for Gmail
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'rajashnushakya@gmail.com'; 
+    $mail->Password = 'chuejenrgapnicmg'; 
+    $mail->SMTPSecure = 'tls';
+    $mail->Port = 587; 
+
+    // Email content
+    $mail->setFrom('rajashnushakya@gmail.com', 'Hostel Management System');
+    $mail->addAddress($emailid);
+    $mail->Subject = 'Login Credentials';
+    $mail->Body = "
+        Dear $fname,
+
+        We hope this email finds you well. As a user of our Hostel Management System (HMS), we are pleased to provide you with your login credentials to access the system:
+        
+        Username: $emailid
+        Password: $password
+        
+        Please keep your login credentials confidential and do not share them with anyone. If you have any questions or need assistance, feel free to reach out to our support team at [Your Support Email/Contact Information].
+        
+        Thank you for using our HMS platform. We look forward to serving you and ensuring a smooth experience.
+        
+        Best regards,
+        Hostel Management System";
+
+    // Send the email
+    $mail->send();
+    echo 'Email sent successfully!';
+} catch (Exception $e) {
+    echo "Error sending email: {$mail->ErrorInfo}";
+}
 }
 ?>
 
@@ -53,17 +98,17 @@ $mysqli->close();
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
-	<title>User Registration</title>
-	<link rel="stylesheet" href="less/font-awesome.min.css">
-	<link rel="stylesheet" href="less/bootstrap1.min.css">
-	<link rel="stylesheet" href="less/dataTables.bootstrap.min.css">
-	<link rel="stylesheet" href="less/bootstrap-social.css">
-	<link rel="stylesheet" href="less/bootstrap-select.css">
-	<link rel="stylesheet" href="less/fileinput.min.css">
-	<link rel="stylesheet" href="less/awesome-bootstrap-checkbox.css">
-	<link rel="stylesheet" href="less/style1.css">
-<script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
-<script type="text/javascript" src="js/validation.min.js"></script>
+	<title>Staff Registration</title>
+	<link rel="stylesheet" href="../css/less/font-awesome.min.css">
+	<link rel="stylesheet" href="../css/less/bootstrap1.min.css">
+	<link rel="stylesheet" href="../css/less/dataTables.bootstrap.min.css">
+	<link rel="stylesheet" href="../css/less/bootstrap-social.css">
+	<link rel="stylesheet" href="../css/less/bootstrap-select.css">
+	<link rel="stylesheet" href="../css//fileinput.min.css">
+	<link rel="stylesheet" href="../css/less/awesome-bootstrap-checkbox.css">
+	<link rel="stylesheet" href="../css/less/style1.css">
+<script type="text/javascript" src="/Hostel_Management_System/js/jquery-1.11.3-jquery.min.js"></script>
+<script type="text/javascript" src="/Hostel_Management_System/js/validation.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
 function valid()
@@ -177,8 +222,10 @@ return true;
 
 
 <div class="col-sm-6 col-sm-offset-4">
-<button class="btn btn-default" type="submit">Cancel</button>
-<input type="submit" action="../php/read.php"name="submit" Value="Register" class="btn btn-primary">
+    <button class="btn btn-default" type="button">Cancel</button>
+    <input type="submit" formaction="" name="submit" value="Register" class="btn btn-primary">
+</div>
+
 </div>
 </form>
 
