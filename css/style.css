@@ -12,7 +12,7 @@ body {
 }
 .login-bg
 {
-    background-image:url('../images/login-bg.jpg');
+    background-image:url('../img/login-bg.jpg');
     background-repeat:no-repeat;
     background-size:cover;
 }
@@ -82,7 +82,7 @@ body {
 
 .log-btn {
   background: #0AC986;
-  dispaly: inline-block;
+  display: inline-block;
   width: 100%;
   font-size: 16px;
   height: 50px;
