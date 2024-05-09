@@ -32,8 +32,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $error = "Invalid Credentials";
             }
             break;
-        case 'staff':
+        case 'Staff':
             $query = "SELECT * FROM staff WHERE email='$email' AND password='$password'";
+            $result = $conn->query($query);
+
+            if ($result && $result->num_rows == 1) {
+                $_SESSION['loggedIn'] = true;
+                $_SESSION['role'] = $role;
+                header("Location: ../staffdashboard/staffdashboard.html"); 
+                exit();
+            } else {
+                $error = "Invalid Credentials";
+            }
+
             break;
         case 'user':
             $query = "SELECT * FROM resident WHERE email='$email' AND password='$password'";
@@ -43,18 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
     }
 
-    $result = $conn->query($query);
-
-    if ($result && $result->num_rows == 1) {
-        // User authenticated, set session variable and redirect to dashboard
-        $_SESSION['loggedIn'] = true;
-        $_SESSION['role'] = $role;
-        header("Location: dashboard.php"); // Redirect to appropriate dashboard
-        exit();
-    } else {
-        $error = "Invalid Credentials";
-    }
-
+    
     $conn->close();
 }
 ?>
