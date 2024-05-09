@@ -80,7 +80,7 @@ try {
 
     // Send the email
     $mail->send();
-    echo 'Email sent successfully!';
+    //echo 'Email sent successfully!';
 } catch (Exception $e) {
     echo "Error sending email: {$mail->ErrorInfo}";
 }
