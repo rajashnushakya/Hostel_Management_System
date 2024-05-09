@@ -71,7 +71,7 @@
 
       // Add click event listeners to each button
       dashboard.addEventListener("click", () => {
-        iframeContent.src = "dashboard.php";
+        iframeContent.src = "dashbaord.php";
       });
 
       document.getElementById("logoutLink").addEventListener("click", function(event) {
@@ -80,7 +80,7 @@
     });
 
       announcementBtn.addEventListener("click", () => {
-        iframeContent.src = "announcement.php";
+        iframeContent.src = "../admin/announcement.html";
       });
 
       registrationBtn.addEventListener("click", () => {
@@ -88,7 +88,7 @@
       });
 
       roomBtn.addEventListener("click", () => {
-        iframeContent.src = "roomregistration.php";
+        iframeContent.src = "../admin/roomregistration.html";
       });
     </script>
     <script src="admin.js"></script>
