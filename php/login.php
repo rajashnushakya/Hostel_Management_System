@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($email == 'rajashnushakya@gmail.com' && $password == '11shakyaraj') {
                 $_SESSION['loggedIn'] = true;
                 $_SESSION['role'] = $role;
-                header("Location: dashbaord.php");
+                header("Location: adminDashboard.php");
                 exit();
             } else {
                 $error = "Invalid Credentials";
