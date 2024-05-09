@@ -23,7 +23,7 @@ include('connection.php');
 	<link rel="stylesheet" href="../admin/css/bootstrap-select.css">
 	<link rel="stylesheet" href="../admin/css/fileinput.min.css">
 	<link rel="stylesheet" href="../admin/css/awesome-bootstrap-checkbox.css">
-	<link rel="stylesheet" href="../admin/css/style2.css">
+	<link rel="stylesheet" href="../admin/css/style.css">
 
 
 </head>
@@ -62,7 +62,7 @@ $stmt->close();
 													<div class="stat-panel-title text-uppercase"> Students</div>
 												</div>
 											</div>
-											<a href="#" class="block-anchor panel-footer">Full Detail <i class="fa fa-arrow-right"></i></a>
+											<a href="#" class="block-anchor panel-footer">See All <i class="fa fa-arrow-right"></i></a>
 										</div>
 									</div>
 									<div class="col-md-3">
