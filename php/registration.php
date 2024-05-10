@@ -37,7 +37,7 @@ if ($password != $cpassword) {
     
     // Execute the query
     if ($mysqli->query($query) === TRUE) {
-		echo "<script>alert('New record inserted successfully');</script>";
+		echo "<script>alert('Successfully inserted');</script>";
 	} else {
 		echo "<script>alert('Failed to insert new record');</script>";
 	}
@@ -71,12 +71,14 @@ try {
         Username: $emailid
         Password: $password
         
-        Please keep your login credentials confidential and do not share them with anyone. If you have any questions or need assistance, feel free to reach out to our support team at [Your Support Email/Contact Information].
+        Please keep your login credentials confidential and do not share them with anyone. If you have any questions or need assistance, feel free to reach out to our support team at sinchanhostel@gmail.com.
         
         Thank you for using our HMS platform. We look forward to serving you and ensuring a smooth experience.
         
         Best regards,
-        Hostel Management System";
+        Sinchan Hostel
+        9813135096, 9766554888
+        Kathmandu, Nepal ";
 
     // Send the email
     $mail->send();
@@ -115,7 +117,7 @@ function valid()
 {
 if(document.registration.password.value!= document.registration.cpassword.value)
 {
-alert("Password and Re-Type Password Field do not match  !!");
+alert("Password and Confirm Password Field do not match  !!");
 document.registration.cpassword.focus();
 return false;
 }
