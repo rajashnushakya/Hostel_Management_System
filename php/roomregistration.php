@@ -37,14 +37,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     <meta name="author" content="">
     <meta name="theme-color" content="#3e454c">
     <title>Room Registration</title>
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-social.css">
-    <link rel="stylesheet" href="css/bootstrap-select.css">
-    <link rel="stylesheet" href="css/fileinput.min.css">
-    <link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/less/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/less/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/less/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../css/less/bootstrap-social.css">
+    <link rel="stylesheet" href="../css/less/bootstrap-select.css">
+    <link rel="stylesheet" href="../css/less/fileinput.min.css">
+    <link rel="stylesheet" href="../css/less/awesome-bootstrap-checkbox.css">
+    <link rel="stylesheet" href="../css/less/style.css">
     <script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
     <script type="text/javascript" src="js/validation.min.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
