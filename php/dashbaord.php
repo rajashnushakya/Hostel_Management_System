@@ -97,7 +97,7 @@ $stmt2->fetch();
 $stmt2->close();
 ?>
 													<div class="stat-panel-number h1 "><?php echo $count2;?></div>
-													<div class="stat-panel-title text-uppercase">Total Courses</div>
+													<div class="stat-panel-title text-uppercase">Total Staff</div>
 												</div>
 											</div>
 											<a href="#" class="block-anchor panel-footer text-center">See All &nbsp; <i class="fa fa-arrow-right"></i></a>
