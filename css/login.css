@@ -10,12 +10,20 @@
 body {
   font-family: 'Open Sans', sans-serif;
 }
-.login-bg
-{
-    background-image:url('../img/login-bg.jpg');
-    background-repeat:no-repeat;
-    background-size:cover;
+.login-bg {
+  background-image: url('../img/login-bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh; /* Ensure the background covers the entire viewport */
 }
+
+.nav-img1 {
+  height: 30px;
+  width: 30px;
+  
+}
+
 .login_head{
     margin:0 auto;
 	display:block;
@@ -154,6 +162,28 @@ body {
     font-size: 24px;
     margin: 0px 0px 25px;
 }
+
+.close-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 9999; /* Ensure it's on top of other elements */
+}
+
+.close-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.close {
+  width: 30px; /* Adjust as needed */
+  height: 30px; /* Adjust as needed */
+}
+
+
+
 
 @media only screen and (max-width: 600px) {
   .login-form {
