@@ -9,3 +9,21 @@ $(document).ready(function(){
     });
 
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    var closeLink = document.getElementById('closeLink');
+
+    // Function to handle clicking the close icon
+    function closeAndRedirect(event) {
+        event.preventDefault(); // Prevent the default action of the link
+        // Add any additional code here to close the current page or perform other actions
+
+        // Redirect to the specified page after a delay (optional)
+        setTimeout(function() {
+            window.location.href = closeLink.getAttribute('href');
+        }, 100); // Adjust the delay as needed
+    }
+
+    // Attach the event listener to the close icon
+    closeLink.addEventListener('click', closeAndRedirect);
+});
