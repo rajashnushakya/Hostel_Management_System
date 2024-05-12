@@ -33,13 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             break;
         case 'Staff':
-            $query = "SELECT * FROM staff WHERE email='$email' AND password='$password'";
+            $query = "SELECT * FROM staff WHERE email='$email' AND cpassword='$password'";
             $result = $conn->query($query);
 
             if ($result && $result->num_rows == 1) {
                 $_SESSION['loggedIn'] = true;
                 $_SESSION['role'] = $role;
-                header("Location: ../staffdashboard/staffdashboard.html"); 
+                header("Location: adminDashboard.php"); 
                 exit();
             } else {
                 $error = "Invalid Credentials";
