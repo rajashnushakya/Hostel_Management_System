@@ -15,17 +15,53 @@ if ($conn->connect_error) {
 
 // Process form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Initialize an empty array to store selected checkboxes
+    $selectedCheckboxes = [];
+
+    // Check if checkboxes are selected and add their values to the array
+    if (!empty($_POST["m1"])) {
+        $selectedCheckboxes[] = $_POST["m1"];
+    }
+    if (!empty($_POST["m2"])) {
+        $selectedCheckboxes[] = $_POST["m2"];
+    }
+    if (!empty($_POST["m3"])) {
+        $selectedCheckboxes[] = $_POST["m3"];
+    }
+    if (!empty($_POST["m4"])) {
+        $selectedCheckboxes[] = $_POST["m4"];
+    }
+    if (!empty($_POST["r1"])) {
+        $selectedCheckboxes[] = $_POST["r1"];
+    }
+    if (!empty($_POST["r2"])) {
+        $selectedCheckboxes[] = $_POST["r2"];
+    }
+    if (!empty($_POST["r3"])) {
+        $selectedCheckboxes[] = $_POST["r3"];
+    }
+    if (!empty($_POST["e1"])) {
+        $selectedCheckboxes[] = $_POST["e1"];
+    }
+    if (!empty($_POST["e2"])) {
+        $selectedCheckboxes[] = $_POST["e2"];
+    }
+
     // Collect form data
-    $requestType = $_POST["request_type"];
     $requestDescription = $_POST["request_description"];
-    
-    // Insert data into database
-    $sql = "INSERT INTO maintenance_requests (request_type, request_description) VALUES ('$requestType', '$requestDescription')";
-    
-    if ($conn->query($sql) === TRUE) {
-      echo "<script>alert('Record inserted successfully');</script>";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+
+    // Insert each selected checkbox value into the database
+    foreach ($selectedCheckboxes as $checkboxValue) {
+        $sql = "INSERT INTO request (request_text) VALUES ('$checkboxValue')";
+        
+        if ($conn->query($sql) !== TRUE) {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+    }
+
+    // Show success message if there were no errors
+    if (empty($conn->error)) {
+        echo "<script>alert('Records inserted successfully');</script>";
     }
 }
 
@@ -48,19 +84,19 @@ $conn->close();
     <h2 class="mt-4 mb-5">MAINTANANCE</h2>
     <ul class="list-group">
         <li class="list-group-item">
-          <input class="form-check-input me-1" type="checkbox" value="AC not Working" id="acCheckbox_maintenance" name="request_type">
+          <input class="form-check-input me-1" type="checkbox" value="AC not Working" id="acCheckbox_maintenance" name="m1">
           <label class="form-check-label" for="acCheckbox_maintenance">AC not Working</label>
         </li>
         <li class="list-group-item">
-          <input class="form-check-input me-1" type="checkbox" value="Bulb not working" id="bulbCheckbox_maintenance" name="request_type">
+          <input class="form-check-input me-1" type="checkbox" value="Bulb not working" id="bulbCheckbox_maintenance" name="m2">
           <label class="form-check-label" for="bulbCheckbox_maintenance">Bulb not working</label>
         </li>
         <li class="list-group-item">
-          <input class="form-check-input me-1" type="checkbox" value="Post issue" id="postCheckbox_maintenance" name="request_type">
+          <input class="form-check-input me-1" type="checkbox" value="Post issue" id="postCheckbox_maintenance" name="m3">
           <label class="form-check-label" for="postCheckbox_maintenance">Post issue</label>
         </li>
         <li class="list-group-item">
-          <input class="form-check-input me-1" type="checkbox" value="Windows glass broken" id="windowCheckbox_maintenance" name="request_type">
+          <input class="form-check-input me-1" type="checkbox" value="Windows glass broken" id="windowCheckbox_maintenance" name="m4">
           <label class="form-check-label" for="windowCheckbox_maintenance">Windows glass broken</label>
         </li>
       </ul>
@@ -68,15 +104,15 @@ $conn->close();
       <h2 class="mt-4 mb-5">Room</h2>
       <ul class="list-group">
           <li class="list-group-item">
-            <input class="form-check-input me-1" type="checkbox" value="Room mate issue" id="acCheckbox_room" name="request_type">
+            <input class="form-check-input me-1" type="checkbox" value="Room mate issue" id="acCheckbox_room" name="r1">
             <label class="form-check-label" for="acCheckbox_room">Room mate issue</label>
           </li>
           <li class="list-group-item">
-            <input class="form-check-input me-1" type="checkbox" value="Cold Room" id="bulbCheckbox_room" name="request_type">
+            <input class="form-check-input me-1" type="checkbox" value="Cold Room" id="bulbCheckbox_room" name="r2">
             <label class="form-check-label" for="bulbCheckbox_room">Cold Room</label>
           </li>
           <li class="list-group-item">
-            <input class="form-check-input me-1" type="checkbox" value="Room cleaning" id="postCheckbox_room" name="request_type">
+            <input class="form-check-input me-1" type="checkbox" value="Room cleaning" id="postCheckbox_room" name="r3">
             <label class="form-check-label" for="postCheckbox_room">Room cleaning</label>
           </li>
         </ul>
@@ -84,11 +120,11 @@ $conn->close();
         <h2 class="mt-4 mb-5">Extra</h2>
         <ul class="list-group">
             <li class="list-group-item">
-              <input class="form-check-input me-1" type="checkbox" value="Laundry" id="acCheckbox_extra" name="request_type">
+              <input class="form-check-input me-1" type="checkbox" value="Laundry" id="acCheckbox_extra" name="e1">
               <label class="form-check-label" for="acCheckbox_extra">Laundry</label>
             </li>
             <li class="list-group-item">
-              <input class="form-check-input me-1" type="checkbox" value="Bed Change" id="bulbCheckbox_extra" name="request_type">
+              <input class="form-check-input me-1" type="checkbox" value="Bed Change" id="bulbCheckbox_extra" name="e2">
               <label class="form-check-label" for="bulbCheckbox_extra">Bed Change</label>
             </li>
         
