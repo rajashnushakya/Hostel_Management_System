@@ -120,7 +120,6 @@
     <table>
         <tr>
             <th>ID</th>
-            <th>Room Number</th>
             <th>Name</th>
             <th>Category</th>
             <th>Seater</th>
@@ -140,8 +139,7 @@
             // Loop through each row
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
-                echo "<td>" . $row['id'] . "</td>";
-                echo "<td contenteditable='false'>" . $row['room_number'] . "</td>";
+                echo "<td contenteditable='false'>" . $row['id'] . "</td>";
                 echo "<td contenteditable='false'>" . $row['room_name'] . "</td>";
                 echo "<td contenteditable='false'>" . $row['category'] . "</td>";
                 echo "<td contenteditable='false'>" . $row['seater'] . "</td>";
