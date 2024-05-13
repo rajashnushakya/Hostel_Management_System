@@ -12,7 +12,7 @@
 <body class="login-bg">
     <div class="login-form">
         <p class="logoText">HMS</p>
-        <form action="../php/login.php" method="POST"> <!-- Point to your PHP file -->
+        <form class="php-form"> <!-- Point to your PHP file -->
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Email" id="email" name="email">
                 <i class="fa fa-user"></i>
@@ -30,8 +30,43 @@
             </div>
             <span class="alert"><?php if(isset($error)) echo $error; ?></span> <!-- Display error message if any -->
             <!--<a class="link" href="#">Lost your password?</a>-->
-            <button type="submit" class="log-btn">Log in</button>
+            <button type="button" class="log-btn">Log in</button>
         </form>
     </div>
 </body>
+<script>
+    let form = document.querySelector(".php-form");
+let btn = document.querySelector(".log-btn");
+
+function saveToLS(data){
+    console.log(data['user']['email']);
+    localStorage.setItem("email", data['user']['email'])
+}
+
+async function login(email, password, UserRole) {
+    let bodyData = new FormData();
+    bodyData.append('email', email);
+    bodyData.append('password', password);
+    bodyData.append('UserRole', UserRole);
+
+    const response = await fetch("../php/login.php", {
+        method: 'POST',
+        body: bodyData
+    });
+
+    const data = await response.json();
+    window.location.href = "../php/" + data['redirect'];
+    saveToLS(data);
+
+}
+
+btn.addEventListener("click", () => {
+    let email = document.querySelector("#email").value;
+    let password = document.querySelector("#Password").value;
+    let UserRole = document.querySelector("#UserRole").value;
+
+    login(email, password, UserRole);
+});
+
+</script>
 </html>
