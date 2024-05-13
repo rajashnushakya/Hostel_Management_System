@@ -18,16 +18,31 @@ $result = $stmt->get_result();
   <title>Room Booking</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <style>
-    .container {
-      padding: 20px;
-    }
-    .mb-3-custom {
-      margin-bottom: 1.5rem;
-    }
-    .table {
-      margin-top: 20px;
-    }
-  </style>
+  .container {
+    padding: 20px;
+  }
+  .mb-3-custom {
+    margin-bottom: 1.5rem;
+  }
+  .table {
+    margin-top: 20px;
+  }
+  /* Remove .selected-row class */
+  /* .selected-row {
+    background-color: lightblue;
+  } */
+  /* New class for clicked rows */
+  .clicked-row {
+    background-color: lightgreen; /* Change to your desired color */
+  }
+  /* Added styles for hover effect */
+  table tbody tr:hover {
+    cursor: pointer;
+    background-color: #e1f0e5; /* Light blue shade */
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  }
+</style>
+
 </head>
 <body>
     <!-- Room Details -->
@@ -36,7 +51,7 @@ $result = $stmt->get_result();
         <h1 class="col-sm-2">Room Booking</h1>
       </div>    
       <div>
-        <table class="table">
+        <table id="roomTable" class="table">
           <thead>
             <tr>
               <th scope="col">Id</th>
@@ -49,7 +64,7 @@ $result = $stmt->get_result();
             <?php
             // Loop through each row of room booking data
             while ($row = $result->fetch_assoc()) {
-              echo "<tr>";
+              echo "<tr data-id='" . $row['id'] . "'>";
               echo "<th scope='row'>" . $row['id'] . "</th>";
               echo "<td>" . $row['room_name'] . "</td>";
               echo "<td>" . $row['seater'] . "</td>";
@@ -64,12 +79,61 @@ $result = $stmt->get_result();
       <!-- Buttons -->
       <div class="row justify-content-center">
         <div class="col-md-6 text-center">
-          <button type="button" class="btn btn-primary btn-sm me-2">Submit</button>
+          <button id="submitBtn" class="btn btn-primary btn-sm me-2">Submit</button>
           <button type="button" class="btn btn-secondary btn-sm">Back</button>
         </div>
       </div>
     </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const roomTable = document.getElementById('roomTable');
+      const submitBtn = document.getElementById('submitBtn');
+
+      roomTable.addEventListener('click', (e) => {
+        const clickedRow = e.target.closest('tr');
+        if (clickedRow) {
+          clickedRow.classList.toggle('clicked-row');
+          clickedRow.classList.toggle('selected-row');
+          const roomId = clickedRow.getAttribute('data-id');
+          localStorage.setItem('roomId', roomId);
+        }
+      });
+      const userEmail = localStorage.getItem('email');
+      console.log(userEmail);
+      submitBtn.addEventListener('click', () => {
+            const roomId = localStorage.getItem('roomId');
+            if (roomId) {
+                alert('Room ID selected: ' + roomId);
+
+                // AJAX call to retrieve resident name
+                $.ajax({
+                    type: 'GET',
+                    url: 'retrieve_email.php',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            const residentName = response.residentName;
+                            console.log('Resident Name:', residentName);
+                            // Do something with the resident name
+                        } else {
+                            console.log('Error:', response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('AJAX Error:', error);
+                    }
+                });
+
+            } else {
+                alert('Please select a room before submitting.');
+            }
+        });
+    });
+
+  </script>
+
 </body>
 </html>
