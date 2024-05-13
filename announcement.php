@@ -1,5 +1,11 @@
 <?php
-include('connection.php'); 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'PHPMailer/Exception.php';
+require 'PHPMailer/PHPMailer.php';
+require 'PHPMailer/SMTP.php';
+require 'connection.php'; // Include your database connection file
 
 // Check connection
 if ($mysqli->connect_error) {
@@ -19,6 +25,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if ($mysqli->query($sql) === TRUE) {
     echo "<script>alert('Record inserted successfully');</script>";
+
+    // Send emails based on selection
+    if ($announcementFor === 'staff') {
+      sendEmailToStaff($announcementTitle, $announcementMessage);
+    } elseif ($announcementFor === 'resident') {
+      sendEmailToResidents($announcementTitle, $announcementMessage);
+    }
   } else {
     echo "Error: " . $sql . "<br>" . $mysqli->error;
   }
@@ -26,6 +39,100 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Close connection
 $mysqli->close();
+
+function sendEmailToStaff($title, $message) {
+  $mail = new PHPMailer(true);
+
+  try {
+    // SMTP settings for Gmail
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'rajashnushakya@gmail.com'; // Your Gmail email
+    $mail->Password = 'chuejenrgapnicmg'; // Your Gmail password
+    $mail->SMTPSecure = 'tls';
+    $mail->Port = 587;
+
+    // Email content
+    $mail->setFrom('rajashnushakya@gmail.com', 'Hostel Management System');
+    // Fetch staff emails from the database
+    $staffEmails = fetchStaffEmails(); // You need to implement this function
+    foreach ($staffEmails as $email) {
+      $mail->addAddress($email);
+    }
+    $mail->Subject = $title;
+    $mail->Body = $message;
+
+    // Send the email
+    $mail->send();
+    //echo 'Email sent successfully!';
+  } catch (Exception $e) {
+    echo "Error sending email: {$mail->ErrorInfo}";
+  }
+}
+
+function sendEmailToResidents($title, $message) {
+    $mail = new PHPMailer(true);
+
+    try {
+      // SMTP settings for Gmail
+      $mail->isSMTP();
+      $mail->Host = 'smtp.gmail.com';
+      $mail->SMTPAuth = true;
+      $mail->Username = 'rajashnushakya@gmail.com'; // Your Gmail email
+      $mail->Password = 'chuejenrgapnicmg'; // Your Gmail password
+      $mail->SMTPSecure = 'tls';
+      $mail->Port = 587;
+  
+      // Email content
+      $mail->setFrom('rajashnushakya@gmail.com', 'Hostel Management System');
+      // Fetch residents' emails from the database
+      $residentEmails = fetchResidentEmails(); // You need to implement this function
+      foreach ($residentEmails as $email) {
+        $mail->addAddress($email);
+      }
+      $mail->Subject = $title;
+      $mail->Body = $message;
+  
+      // Send the email
+      $mail->send();
+      //echo 'Email sent successfully!';
+    } catch (Exception $e) {
+      echo "Error sending email: {$mail->ErrorInfo}";
+    }
+  }
+  
+  // Function to fetch residents' emails from the database
+  function fetchResidentEmails() {
+    global $mysqli;
+    $emails = array();
+  
+    // Fetch residents' emails from the residents table (replace 'residents' with your actual table name)
+    $result = $mysqli->query("SELECT email FROM resident");
+    if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+        $emails[] = $row['email'];
+      }
+    }
+  
+    return $emails;
+}
+
+// Function to fetch staff emails from the database
+function fetchStaffEmails() {
+  global $mysqli;
+  $emails = array();
+
+  // Fetch staff emails from the staff table
+  $result = $mysqli->query("SELECT email FROM staff");
+  if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+      $emails[] = $row['email'];
+    }
+  }
+
+  return $emails;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
