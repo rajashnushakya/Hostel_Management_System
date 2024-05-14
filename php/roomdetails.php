@@ -114,7 +114,7 @@
 <body>
 <div class="container">
     <!-- Cross button to go back to main.html -->
-    <a href="dashboard.html" class="cross-button">&#10006;</a>
+    <a href="dashboard.php" class="cross-button">&#10006;</a>
 
     <h2>Room Details</h2>
     <table>

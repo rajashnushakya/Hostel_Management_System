@@ -72,7 +72,7 @@
   </head>
   <body>
     <div class="container">
-      <a href="dashboard.html" class="cross-button">&#10006;</a>
+      <a href="dashboard.php" class="cross-button">&#10006;</a>
       <h2>Resident Details</h2>
       <table>
         <tr>
