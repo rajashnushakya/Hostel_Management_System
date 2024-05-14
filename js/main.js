@@ -30,7 +30,7 @@
             }
             );
         } else {
-            $dropdown.off("mouseenter mouseleave");
+            $dropdown.off("mouseenter mouseleave");//when the mouse leaves
         }
     });
     
@@ -56,7 +56,4 @@
             console.log('Close button clicked!');
             // For example, you can add code to close a modal or hide a section
         });
-    });
-
-    
-    
+    });    
