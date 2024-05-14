@@ -1,15 +1,14 @@
 <?php
-session_start(); 
-header('Content-Type: application/json'); // Set JSON header
+session_start();
+header('Content-Type: application/json');
 
-$response = array(); // Initialize response array
+$response = array();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
     $role = $_POST['UserRole'];
 
-    // Connect to your database (replace DB_USERNAME, DB_PASSWORD, DB_NAME with your actual credentials)
     $conn = new mysqli("localhost", "root", "", "hms");
 
     if ($conn->connect_error) {
@@ -19,21 +18,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $email = $conn->real_escape_string($email);
         $password = $conn->real_escape_string($password);
 
-        // Hash the password (optional but recommended for security)
-        // $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
         // Query based on the selected role
         switch ($role) {
             case 'admin':
-                // Note: Hash the password in your database and compare hashed passwords for security
                 if ($email == 'rajashnushakya@gmail.com' && $password == '11shakyaraj') {
                     $_SESSION['loggedIn'] = true;
                     $_SESSION['role'] = $role;
-                    $response['redirect'] = "../admin/adminDashboard.php";
+                    $response['redirect'] = "../php/admindashboard.php";
                     $response['user'] = array(
                         'email' => $email,
                         'role' => $role
-                        // Add other user details as needed
                     );
                 } else {
                     $response['error'] = "Invalid Credentials";
@@ -46,32 +40,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($result && $result->num_rows == 1) {
                     $_SESSION['loggedIn'] = true;
                     $_SESSION['role'] = $role;
-                    $response['redirect'] = "adminDashboard.php";
+                    $response['redirect'] = "../php/staffDashboard.php";
                     $row = $result->fetch_assoc();
                     $response['user'] = array(
                         'email' => $row['email'],
                         'role' => $role,
-                        // Add other user details as needed
                     );
                 } else {
                     $response['error'] = "Invalid Credentials";
                 }
-
                 break;
             case 'user':
                 $query = "SELECT * FROM resident WHERE email='$email' AND password='$password'";
-                
                 $result = $conn->query($query);
 
                 if ($result && $result->num_rows == 1) {
                     $_SESSION['loggedIn'] = true;
                     $_SESSION['role'] = $role;
-                    $response['redirect'] = "roombooking.php";
+                    $response['redirect'] = "../php/roombooking.php";
                     $row = $result->fetch_assoc();
                     $response['user'] = array(
                         'email' => $row['email'],
                         'role' => $role,
-                        // Add other user details as needed
                     );
                 } else {
                     $response['error'] = "Invalid Credentials";
@@ -88,5 +78,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $response['error'] = "Invalid request method";
 }
 
-echo json_encode($response); // Output JSON response
+echo json_encode($response);
 ?>
