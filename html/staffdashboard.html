@@ -33,66 +33,58 @@
 				  alt="To do task "
 				/>
 				<h3>To do task </h3>
-                    </div>
-                    <!-- Option for Resident Registration -->
-                    <div class="option2 nav-option">
-                        <img
-                            src="../img/icons8-shouting-50.png"
-                            class="nav-img"
-                            alt="Resident Registration"
-                        />
-                        <h3>Announcement</h3>
-            </div>
-            <div class="nav-option option3">
-              <img
-                src="../img/icons8-fitting-room-50.png"
-                class="nav-img"
-                alt="Registration"
-              />
-                        <h3>Resident Registration</h3>
-                    </div>
-                    <!-- Option for Room Allocation -->
-                    <div class="option4 nav-option">
-                        <img src="../img/icons8-room-50.png" class="nav-img" alt="Room Allocation" />
-                        <h3>Room Allocation</h3>
-                    </div>
-                </div>
-            </nav>
-        </div>
-        <!-- TODO: Add the iframe and JavaScript for Resident Registration and Room Allocation -->
-        <iframe id="iframe-content" src="tasktodo.html"></iframe>
+			  </div>
+			  <!-- Option for Room Allocation -->
+			  <div class="option4 nav-option">
+				  <img src="../img/icons8-room-50.png" class="nav-img" alt="Room Allocation" />
+				  <h3>Room Allocation</h3>
+			  </div>
+			  <!-- Option for Payment -->
+			  <div class="option5 nav-option">
+				  <img src="../img/icons8-payment-50.png" class="nav-img" alt="Payment" />
+				  <h3>Payment</h3>
+			  </div>
+			</div>
+		  </nav>
+		</div>
+		<!-- TODO: Add the iframe and JavaScript for Room Allocation and Payment -->
+		<iframe id="iframe-content" src="tasktodo.html"></iframe>
     </div>
 
     <script>
         // Get references to the buttons and the iframe
         const dashboard = document.querySelector(".option1");
-        const announcementBtn = document.querySelector(".option2");
-        const registrationBtn = document.querySelector(".option3");
         const roomBtn = document.querySelector(".option4");
+        const paymentBtn = document.querySelector(".option5");
         const iframeContent = document.getElementById("iframe-content");
     
-        // Add click event listeners to each button
-        registrationBtn.addEventListener("click", () => {
-            iframeContent.src = "residentregistration.html";
-            // Remove highlight from dashboard button
-            dashboard.classList.remove("highlighted");
-        });
-
-        announcementBtn.addEventListener("click", () => {
-        iframeContent.src = "announcement.html";
-      });
+        // Function to remove highlight from all options
+        function removeHighlight() {
+            const navOptions = document.querySelectorAll('.nav-option');
+            navOptions.forEach(option => {
+                option.classList.remove('highlighted');
+            });
+        }
     
+        // Add click event listeners to each button
         dashboard.addEventListener("click", () => {
             iframeContent.src = "tasktodo.html";
-            // Remove highlight from dashboard button
-            dashboard.classList.remove("highlighted");
+            removeHighlight();
+            dashboard.classList.add("highlighted");
         });
     
         roomBtn.addEventListener("click", () => {
             iframeContent.src = "roomallocation.html";
-            // Remove highlight from dashboard button
-            dashboard.classList.remove("highlighted");
+            removeHighlight();
+            roomBtn.classList.add("highlighted");
+        });
+    
+        paymentBtn.addEventListener("click", () => {
+            iframeContent.src = "payment.html";
+            removeHighlight();
+            paymentBtn.classList.add("highlighted");
         });
     </script>
     
-    <script
+</body>
+</html>
