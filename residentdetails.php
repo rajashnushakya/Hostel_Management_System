@@ -4,9 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Resident Details</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
     <style>
-      /* Add your CSS styles here */
-      /* Just basic styling for demonstration purposes */
       body {
         font-family: Arial, sans-serif;
         margin: 0;
@@ -20,7 +22,7 @@
         background-color: #fff;
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        position: relative; /* Added */
+        position: relative;
       }
       h2 {
         text-align: center;
@@ -60,36 +62,6 @@
       .btn-delete {
         background-color: #f44336;
       }
-      /* Styles for the popup */
-      .popup {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        display: none;
-      }
-      .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: none;
-      }
-      .btn-confirm {
-        background-color: #f44336;
-        color: #fff;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 4px;
-        cursor: pointer;
-      }
-      /* Style for the cross button */
       .cross-button {
         position: absolute;
         top: 10px;
@@ -100,132 +72,188 @@
   </head>
   <body>
     <div class="container">
-      <!-- Cross button to go back to main.html -->
       <a href="dashboard.html" class="cross-button">&#10006;</a>
-
       <h2>Resident Details</h2>
       <table>
         <tr>
-        <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>City</th>
-            <th>Email</th>
-            <th>Mobile Number</th>
-            <th>Gender</th>
-            <th>Actions</th> 
+          <th>ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>City</th>
+          <th>Email</th>
+          <th>Mobile Number</th>
+          <th>Gender</th>
+          <th>Actions</th>
         </tr>
-        <!-- Sample data, replace with dynamic data from your backend -->
         <?php
-        // Database connection
         include('connection.php');
-
-        // Fetch data from database
         $query = "SELECT * FROM resident";
         $result = $mysqli->query($query);
-
-        // Check if records exist
         if ($result->num_rows > 0) {
-            // Loop through each row
-            while ($row = $result->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>" . $row['id'] . "</td>";
-                echo "<td>" . $row['firstname'] . "</td>";
-                echo "<td>" . $row['lastname'] . "</td>";
-                echo "<td>" . $row['city'] . "</td>";
-                echo "<td>" . $row['email'] . "</td>";
-                echo "<td>" . $row['mobile_number'] . "</td>";
-                echo "<td>" . $row['gender'] . "</td>";
-                // Add buttons for actions (Edit and Delete)
-                echo "<td>
-                        <button class='btn btn-edit' onclick='editRow(this)'>Edit</button>
-                        <button class='btn btn-delete' onclick='showConfirmation()'>Delete</button>
-                      </td>";
-                echo "</tr>";
-            }
+          while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . $row['id'] . "</td>";
+            echo "<td>" . $row['firstname'] . "</td>";
+            echo "<td>" . $row['lastname'] . "</td>";
+            echo "<td>" . $row['city'] . "</td>";
+            echo "<td>" . $row['email'] . "</td>";
+            echo "<td>" . $row['mobile_number'] . "</td>";
+            echo "<td>" . $row['gender'] . "</td>";
+            echo "<td>
+                    <button class='btn btn-edit' data-id='" . $row['id'] . "' onclick='editRow(this)'>Edit</button>
+                    <button class='btn btn-delete' data-id='" . $row['id'] . "' onclick='confirmDelete(this)'>Delete</button>
+                  </td>";
+            echo "</tr>";
+          }
         } else {
-            // If no records found
-            echo "<tr><td colspan='8'>No residents found</td></tr>";
+          echo "<tr><td colspan='8'>No residents found</td></tr>";
         }
         ?>
-    </table>
-</div>
-
-    <!-- Popup for confirmation -->
-    <div class="overlay" id="overlay"></div>
-    <div class="popup" id="popup">
-      <p>Are you sure you want to delete this room?</p>
-      <button class="btn-confirm" onclick="deleteRoom()">Yes, Delete</button>
-      <button class="btn-confirm" onclick="hideConfirmation()">Cancel</button>
+      </table>
     </div>
 
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editModalLabel">Edit Resident Details</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="editResidentForm">
+              <div class="form-group">
+                <label for="editFirstName">First Name:</label>
+                <input type="text" class="form-control" id="editFirstName" name="editFirstName" required>
+              </div>
+              <div class="form-group">
+                <label for="editLastName">Last Name:</label>
+                <input type="text" class="form-control" id="editLastName" name="editLastName" required>
+              </div>
+              <div class="form-group">
+                <label for="editCity">City:</label>
+                <input type="text" class="form-control" id="editCity" name="editCity" required>
+              </div>
+              <div class="form-group">
+                <label for="editEmail">Email:</label>
+                <input type="email" class="form-control" id="editEmail" name="editEmail" required>
+              </div>
+              <div class="form-group">
+                <label for="editMobileNumber">Mobile Number:</label>
+                <input type="text" class="form-control" id="editMobileNumber" name="editMobileNumber" required>
+              </div>
+              <div class="form-group">
+                <label for="editGender">Gender:</label>
+                <select class="form-control" id="editGender" name="editGender" required>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+              <input type="hidden" id="editId" name="editId">
+              <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Delete Confirmation</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete this resident?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger" id="deleteButton">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-      function showConfirmation() {
-        document.getElementById("overlay").style.display = "block";
-        document.getElementById("popup").style.display = "block";
-      }
-
-      function hideConfirmation() {
-        document.getElementById("overlay").style.display = "none";
-        document.getElementById("popup").style.display = "none";
-      }
-
-      function deleteRoom() {
-        // Perform delete operation here
-        //add backend logic here or write a php script to delete the data
-        hideConfirmation();
-      }
-
       function editRow(button) {
-        var row = button.parentNode.parentNode;
-        var cells = row.getElementsByTagName("td");
-
-        // Toggle contenteditable attribute for each cell
-        for (var i = 1; i < cells.length - 1; i++) {
-          if (cells[i].contentEditable === "true") {
-            cells[i].contentEditable = "false";
-          } else {
-            cells[i].contentEditable = "true";
+        const id = button.getAttribute("data-id");
+        $.ajax({
+          url: 'get_resident.php', // This PHP file will fetch the resident details based on the ID
+          type: 'GET',
+          data: { id: id },
+          success: function(response) {
+            const data = JSON.parse(response);
+            $('#editId').val(data.id);
+            $('#editFirstName').val(data.firstname);
+            $('#editLastName').val(data.lastname);
+            $('#editCity').val(data.city);
+            $('#editEmail').val(data.email);
+            $('#editMobileNumber').val(data.mobile_number);
+            $('#editGender').val(data.gender);
+            $('#editModal').modal('show');
           }
-        }
-
-        // Toggle button text between Edit and Save
-        if (button.innerHTML === "Edit") {
-          button.innerHTML = "Save";
-          button.classList.remove("btn-edit");
-          button.classList.add("btn-save");
-          button.setAttribute("onclick", "saveRow(this)");
-        } else {
-          button.innerHTML = "Edit";
-          button.classList.remove("btn-save");
-          button.classList.add("btn-edit");
-          button.setAttribute("onclick", "editRow(this)");
-          // Show popup for save action
-          showSavePopup();
-        }
+        });
       }
 
-      function saveRow(button) {
-        // Toggle button text back to Edit
-        button.innerHTML = "Edit";
-        button.classList.remove("btn-save");
-        button.classList.add("btn-edit");
-        button.setAttribute("onclick", "editRow(this)");
+      $('#editResidentForm').on('submit', function(e) {
+        e.preventDefault();
+        const id = $('#editId').val();
+        const firstname = $('#editFirstName').val();
+        const lastname = $('#editLastName').val();
+        const city = $('#editCity').val();
+        const email = $('#editEmail').val();
+        const mobile_number = $('#editMobileNumber').val();
+        const gender = $('#editGender').val();
 
-        // Toggle contenteditable attribute for each cell
-        var row = button.parentNode.parentNode;
-        var cells = row.getElementsByTagName("td");
-        for (var i = 1; i < cells.length - 1; i++) {
-          cells[i].contentEditable = "false";
-        }
+        $.ajax({
+          url: 'update_resident.php', // This PHP file will handle the update request
+          type: 'POST',
+          data: {
+            id: id,
+            firstname: firstname,
+            lastname: lastname,
+            city: city,
+            email: email,
+            mobile_number: mobile_number,
+            gender: gender
+          },
+          success: function(response) {
+            alert("Resident details updated successfully!");
+            $('#editModal').modal('hide');
+            location.reload(); // Reload the page to see the updated details
+          }
+        });
+      });
 
-        // Show popup for save action
-        showSavePopup();
+      function confirmDelete(button) {
+        const id = button.getAttribute("data-id");
+        $('#deleteButton').attr("data-id", id);
+        $('#deleteModal').modal('show');
       }
 
-      function showSavePopup() {
-        alert("Changes saved successfully!");
-      }
+      $('#deleteButton').on('click', function() {
+        const id = $(this).attr("data-id");
+
+        $.ajax({
+          url: 'delete_resident.php', // This PHP file will handle the delete request
+          type: 'POST',
+          data: { id: id },
+          success: function(response) {
+            alert(response);
+            $('#deleteModal').modal('hide');
+            location.reload(); // Reload the page to see the updated details
+          }
+        });
+      });
     </script>
- </body>
+  </body>
 </html>
