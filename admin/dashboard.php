@@ -1,4 +1,7 @@
-
+<?php
+session_start();
+include('connection.php');
+?>
 <!doctype html>
 <html lang="en" class="no-js">
 
@@ -11,26 +14,30 @@
 	<meta name="theme-color" content="#3e454c">
 
 	<title>DashBoard</title>
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
-	<link rel="stylesheet" href="css/bootstrap-social.css">
-	<link rel="stylesheet" href="css/bootstrap-select.css">
-	<link rel="stylesheet" href="css/fileinput.min.css">
-	<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="../admin/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../admin/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../admin/css/dataTables.bootstrap.min.css">
+	<link rel="stylesheet" href="../admin/css/bootstrap-social.css">
+	<link rel="stylesheet" href="../admin/css/bootstrap-select.css">
+	<link rel="stylesheet" href="../admin/css/fileinput.min.css">
+	<link rel="stylesheet" href="../admin/css/awesome-bootstrap-checkbox.css">
+	<link rel="stylesheet" href="../admin/css/style.css">
 
 
 </head>
 
 <body>
+
+
+	<div class="ts-main-content">
+		
 		<div class="content-wrapper">
 			<div class="container-fluid">
 
 				<div class="row">
 					<div class="col-md-12">
 
-						<h2 class="page-title">Welcome to Admin Dashboard</h2>
+						<h2 class="page-title">Dashboard</h2>
 
 						<div class="row">
 							<div class="col-md-12">
@@ -40,38 +47,58 @@
 											<div class="panel-body bk-primary text-light">
 												<div class="stat-panel text-center">
 
+<?php
+$result ="SELECT count(*) FROM resident ";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($count);
+$stmt->fetch();
+$stmt->close();
+?>
 
-
-													
-													<div class="stat-panel-title text-uppercase"> Staff</div>
+													<div class="stat-panel-number h1 "><?php echo $count;?></div>
+													<div class="stat-panel-title text-uppercase"> Students</div>
 												</div>
 											</div>
-											<a href="staff.html" class="block-anchor panel-footer text-center">See All <i class="fa fa-arrow-right"></i></a>
+											<a href="#" class="block-anchor panel-footer">See All <i class="fa fa-arrow-right"></i></a>
 										</div>
 									</div>
 									<div class="col-md-3">
 										<div class="panel panel-default">
 											<div class="panel-body bk-success text-light">
 												<div class="stat-panel text-center">
-
-
-													
+<?php
+$result1 ="SELECT count(*) FROM rooms ";
+$stmt1 = $mysqli->prepare($result1);
+$stmt1->execute();
+$stmt1->bind_result($count1);
+$stmt1->fetch();
+$stmt1->close();
+?>
+													<div class="stat-panel-number h1 "><?php echo $count1;?></div>
 													<div class="stat-panel-title text-uppercase">Total Rooms </div>
 												</div>
 											</div>
-											<a href="room.html" class="block-anchor panel-footer text-center">See All &nbsp; <i class="fa fa-arrow-right"></i></a>
+											<a href="#" class="block-anchor panel-footer text-center">See All &nbsp; <i class="fa fa-arrow-right"></i></a>
 										</div>
 									</div>
 									<div class="col-md-3">
 										<div class="panel panel-default">
 											<div class="panel-body bk-info text-light">
 												<div class="stat-panel text-center">
-
-													
-													<div class="stat-panel-title text-uppercase">Resident</div>
+<?php
+$result2 ="SELECT count(*) FROM staff ";
+$stmt2 = $mysqli->prepare($result2);
+$stmt2->execute();
+$stmt2->bind_result($count2);
+$stmt2->fetch();
+$stmt2->close();
+?>
+													<div class="stat-panel-number h1 "><?php echo $count2;?></div>
+													<div class="stat-panel-title text-uppercase">Total Staff</div>
 												</div>
 											</div>
-											<a href="resident.html" class="block-anchor panel-footer text-center">See All &nbsp; <i class="fa fa-arrow-right"></i></a>
+											<a href="#" class="block-anchor panel-footer text-center">See All &nbsp; <i class="fa fa-arrow-right"></i></a>
 										</div>
 									</div>
 
@@ -126,7 +153,5 @@
 	</script>
 
 </body>
-
-<style> .foot{text-align: center; border: 1px solid black;}</style>
 
 </html>

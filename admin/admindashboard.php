@@ -57,7 +57,7 @@
         </div>
       </nav>
     </div>
-    <iframe id="iframe-content" src="dashboard.html"></iframe>
+    <iframe id="iframe-content" src="dashboard.php"></iframe>
   </div>
 
   <script>
