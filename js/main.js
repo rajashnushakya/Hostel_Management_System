@@ -52,8 +52,6 @@
         var closeButton = document.querySelector('.close-button');
     
         closeButton.addEventListener('click', function() {
-            // Add logic to close the container or perform any other action
             console.log('Close button clicked!');
-            // For example, you can add code to close a modal or hide a section
         });
     });    
