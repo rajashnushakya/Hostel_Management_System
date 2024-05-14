@@ -186,6 +186,7 @@
           <input
             type="text"
             class="form-control"
+            id = "email"
             placeholder="Email"
             id="Email"
           />
@@ -195,6 +196,7 @@
           <input
             type="password"
             class="form-control"
+            id = "Password"
             placeholder="Password"
             id="Password"
           />
@@ -417,5 +419,49 @@
     <!-- Template Javascript -->
     <script src="../js/main.js"></script>
     <script src="../js/loginFormController.js"></script>
+    <script>
+let form = document.querySelector(".php-form");
+        let btn = document.querySelector(".log-btn");
+        let errorMessage = document.querySelector("#error-message");
+
+        function saveToLS(data){
+            console.log(data['user']['email']);
+            localStorage.setItem("email", data['user']['email']);
+        }
+
+        async function login(email, password, UserRole) {
+            let bodyData = new FormData();
+            bodyData.append('email', email);
+            bodyData.append('password', password);
+            bodyData.append('UserRole', UserRole);
+
+            const response = await fetch("../php/login.php", {
+                method: 'POST',
+                body: bodyData
+            });
+
+            const data = await response.json();
+            if (data.redirect) {
+                saveToLS(data);
+                window.location.href = data.redirect;
+            } else {
+                errorMessage.textContent = data.error;
+                errorMessage.style.color = "red";
+            }
+        }
+
+        btn.addEventListener("click", () => {
+            let email = document.querySelector("#email").value;
+            let password = document.querySelector("#Password").value;
+            let UserRole = document.querySelector("#UserRole").value;
+
+            if (email && password && UserRole) {
+                login(email, password, UserRole);
+            } else {
+                errorMessage.textContent = "Please fill in all fields.";
+                errorMessage.style.color = "red";
+            }
+        });
+    </script>
  </body>
 </html>
