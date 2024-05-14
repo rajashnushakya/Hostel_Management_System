@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* Add your CSS styles here */
         /* Just basic styling for demonstration purposes */
@@ -113,9 +114,6 @@
 </head>
 <body>
 <div class="container">
-    <!-- Cross button to go back to main.html -->
-    <a href="dashboard.php" class="cross-button">&#10006;</a>
-
     <h2>Room Details</h2>
     <table>
         <tr>
@@ -139,100 +137,146 @@
             // Loop through each row
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
-                echo "<td contenteditable='false'>" . $row['id'] . "</td>";
-                echo "<td contenteditable='false'>" . $row['room_name'] . "</td>";
-                echo "<td contenteditable='false'>" . $row['category'] . "</td>";
-                echo "<td contenteditable='false'>" . $row['seater'] . "</td>";
-                echo "<td contenteditable='false'>" . $row['fee'] . "</td>";
+                echo "<td>" . $row['id'] . "</td>";
+                echo "<td>" . $row['room_name'] . "</td>";
+                echo "<td>" . $row['category'] . "</td>";
+                echo "<td>" . $row['seater'] . "</td>";
+                echo "<td>" . $row['fee'] . "</td>";
                 echo "<td>
-                      <button class='btn btn-edit' onclick='editRow(this)'>Edit</button>
-                      <button class='btn btn-delete' onclick='showConfirmation()'>Delete</button>
+                <button class='btn btn-edit' data-id='" . $row['id'] . "' onclick='editRow(this)'>Edit</button>
+                <button class='btn btn-delete' data-id='" . $row['id'] . "' onclick='deleteRoom(this)'>Delete</button>
                       </td>";
                 echo "</tr>";
             }
         } else {
             // If no records found
-            echo "<tr><td colspan='7'>No rooms found</td></tr>";
+            echo "<tr><td colspan='6'>No rooms found</td></tr>";
         }
         ?>
     </table>
 </div>
 
-<!-- Popup for confirmation -->
-<div class="overlay" id="overlay"></div>
-<div class="popup" id="popup">
-    <p>Are you sure you want to delete this room?</p>
-    <button class="btn-confirm" onclick="deleteRoom()">Yes, Delete</button>
-    <button class="btn-confirm" onclick="hideConfirmation()">Cancel</button>
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Room Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editRoomForm">
+                    <div class="form-group">
+                        <label for="editRoomName">Room Name:</label>
+                        <input type="text" class="form-control" id="editRoomName" name="editRoomName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCategory">Category:</label>
+                        <input type="text" class="form-control" id="editCategory" name="editCategory" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editSeater">Seater:</label>
+                        <input type="text" class="form-control" id="editSeater" name="editSeater" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editFee">Price:</label>
+                        <input type="text" class="form-control" id="editFee" name="editFee" required>
+                    </div>
+                    <input type="hidden" id="editId" name="editId">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this resident?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="deleteButton">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-    function showConfirmation() {
-        document.getElementById("overlay").style.display = "block";
-        document.getElementById("popup").style.display = "block";
-    }
-
-    function hideConfirmation() {
-        document.getElementById("overlay").style.display = "none";
-        document.getElementById("popup").style.display = "none";
-    }
-
-    function deleteRoom() {
-        // Perform delete operation here
-        //add backend logic here or write a php script to delete the data
-        hideConfirmation();
-    }
-
     function editRow(button) {
-        var row = button.parentNode.parentNode;
-        var cells = row.getElementsByTagName("td");
-
-        // Toggle contenteditable attribute for each cell
-        for (var i = 1; i < cells.length - 1; i++) {
-            if (cells[i].contentEditable === "true") {
-                cells[i].contentEditable = "false";
-            } else {
-                cells[i].contentEditable = "true";
+        const id = button.getAttribute("data-id");
+        $.ajax({
+            url: 'get_room.php', // This PHP file will fetch the room details based on the ID
+            type: 'GET',
+            data: { id: id },
+            success: function(response) {
+                const data = JSON.parse(response);
+                $('#editId').val(data.id);
+                $('#editRoomName').val(data.room_name);
+                $('#editCategory').val(data.category);
+                $('#editSeater').val(data.seater);
+                $('#editFee').val(data.fee);
+                $('#editModal').modal('show');
             }
-        }
-
-        // Toggle button text between Edit and Save
-        if (button.innerHTML === "Edit") {
-            button.innerHTML = "Save";
-            button.classList.remove("btn-edit");
-            button.classList.add("btn-save");
-            button.setAttribute("onclick", "saveRow(this)");
-        } else {
-            button.innerHTML = "Edit";
-            button.classList.remove("btn-save");
-            button.classList.add("btn-edit");
-            button.setAttribute("onclick", "editRow(this)");
-            // Show popup for save action
-            showSavePopup();
-        }
+        });
     }
 
-    function saveRow(button) {
-        // Toggle button text back to Edit
-        button.innerHTML = "Edit";
-        button.classList.remove("btn-save");
-        button.classList.add("btn-edit");
-        button.setAttribute("onclick", "editRow(this)");
+    $('#editRoomForm').on('submit', function(e) {
+        e.preventDefault();
+        const id = $('#editId').val();
+        const roomName = $('#editRoomName').val();
+        const category = $('#editCategory').val();
+        const seater = $('#editSeater').val();
+        const fee = $('#editFee').val();
 
-        // Toggle contenteditable attribute for each cell
-        var row = button.parentNode.parentNode;
-        var cells = row.getElementsByTagName("td");
-        for (var i = 1; i < cells.length - 1; i++) {
-            cells[i].contentEditable = "false";
+        $.ajax({
+            url: 'update_room.php', // This PHP file will handle the update request
+            type: 'POST',
+            data: {
+                id: id,
+                room_name: roomName,
+                category: category,
+                seater: seater,
+                fee: fee
+            },
+            success: function(response) {
+                alert("Room details updated successfully!");
+                $('#editModal').modal('hide');
+                location.reload(); // Reload the page to see the updated details
+            }
+        });
+    });
+
+    function deleteRoom(button) {
+        const id = button.getAttribute("data-id");
+        if (confirm("Are you sure you want to delete this room?")) {
+            $.ajax({
+                url: 'delete_room.php', // This PHP file will handle the delete request
+                type: 'POST',
+                data: { id: id },
+                success: function(response) {
+                    alert(response);
+                    location.reload(); // Reload the page to see the updated details
+                }
+            });
         }
-
-        // Show popup for save action
-        showSavePopup();
-    }
-
-    function showSavePopup() {
-        alert("Changes saved successfully!");
     }
 </script>
+
 </body>
 </html>
