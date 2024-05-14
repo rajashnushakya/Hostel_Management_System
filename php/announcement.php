@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\Exception;
 require 'PHPMailer/Exception.php';
 require 'PHPMailer/PHPMailer.php';
 require 'PHPMailer/SMTP.php';
-require 'connection.php'; // Include your database connection file
+require 'connection.php'; 
 
 // Check connection
 if ($mysqli->connect_error) {
@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $announcementTitle = $_POST['announcementTitle'];
   $announcementMessage = $_POST['announcementMessage'];
   $announcementScheduledAt = $_POST['announcementScheduledAt'];
-  $announcementFor = $_POST['announcementFor']; // Get the announcement for value
+  $announcementFor = $_POST['announcementFor']; 
 
   // Insert announcement into the database
   $sql = "INSERT INTO announcements (title, message, scheduled_at, announcement_for) VALUES ('$announcementTitle', '$announcementMessage', '$announcementScheduledAt', '$announcementFor')";
@@ -48,15 +48,15 @@ function sendEmailToStaff($title, $message) {
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username = 'rajashnushakya@gmail.com'; // Your Gmail email
-    $mail->Password = 'chuejenrgapnicmg'; // Your Gmail password
+    $mail->Username = 'rajashnushakya@gmail.com'; 
+    $mail->Password = 'chuejenrgapnicmg'; 
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
 
     // Email content
     $mail->setFrom('rajashnushakya@gmail.com', 'Hostel Management System');
     // Fetch staff emails from the database
-    $staffEmails = fetchStaffEmails(); // You need to implement this function
+    $staffEmails = fetchStaffEmails();
     foreach ($staffEmails as $email) {
       $mail->addAddress($email);
     }
@@ -79,15 +79,15 @@ function sendEmailToResidents($title, $message) {
       $mail->isSMTP();
       $mail->Host = 'smtp.gmail.com';
       $mail->SMTPAuth = true;
-      $mail->Username = 'rajashnushakya@gmail.com'; // Your Gmail email
-      $mail->Password = 'chuejenrgapnicmg'; // Your Gmail password
+      $mail->Username = 'rajashnushakya@gmail.com'; 
+      $mail->Password = 'chuejenrgapnicmg'; 
       $mail->SMTPSecure = 'tls';
       $mail->Port = 587;
   
       // Email content
       $mail->setFrom('rajashnushakya@gmail.com', 'Hostel Management System');
       // Fetch residents' emails from the database
-      $residentEmails = fetchResidentEmails(); // You need to implement this function
+      $residentEmails = fetchResidentEmails(); 
       foreach ($residentEmails as $email) {
         $mail->addAddress($email);
       }
