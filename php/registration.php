@@ -49,20 +49,21 @@ $mysqli->close();
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
-	<title>User Registration</title>
+	<title>Staff Registration</title>
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">>
+	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-social.css">
 	<link rel="stylesheet" href="css/bootstrap-select.css">
 	<link rel="stylesheet" href="css/fileinput.min.css">
 	<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
 	<link rel="stylesheet" href="css/style.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
 <script type="text/javascript" src="js/validation.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
-function valid()
+	function valid()
 {
 if(document.registration.password.value!= document.registration.cpassword.value)
 {
@@ -75,7 +76,6 @@ return true;
 </script>
 </head>
 <body>
-
 		<div class="content-wrapper">
 			<div class="container-fluid">
 
@@ -87,12 +87,9 @@ return true;
 						<div class="row">
 							<div class="col-md-12">
 								<div class="panel panel-primary">
-									<div class="panel-heading">HMS</div>
 									<div class="panel-body">
 			<form method="post" action="" name="registration" class="form-horizontal" onSubmit="return valid();">
 											
-										
-
 
 <div class="form-group">
 <label class="col-sm-2 control-label">First Name : </label>
@@ -116,16 +113,18 @@ return true;
 </div>
 
 <div class="form-group">
-<label class="col-sm-2 control-label">Gender : </label>
-<div class="col-sm-8">
-<select name="gender" class="form-control" required="required">
-<option value="">Select Gender</option>
-<option value="male">Male</option>
-<option value="female">Female</option>
-<option value="others">Others</option>
-</select>
-</div>
-</div>
+	<label class="col-sm-2 control-label">Contact No : </label>
+	<div class="col-sm-8">
+	<input type="text" name="contact" id="contact"  class="form-control" required="required">
+	</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Gender : </label>
+		<div class="col-sm-8">
+		<input type="text" name="contact" id="contact"  class="form-control" required="required">
+		</div>
+		</div>
 
 <div class="form-group">
 <label class="col-sm-2 control-label">Role : </label>
@@ -138,12 +137,7 @@ return true;
 </div>
 </div>
 
-<div class="form-group">
-<label class="col-sm-2 control-label">Contact No : </label>
-<div class="col-sm-8">
-<input type="text" name="contact" id="contact"  class="form-control" required="required">
-</div>
-</div>
+
 
 
 <div class="form-group">
@@ -173,7 +167,6 @@ return true;
 
 
 <div class="col-sm-6 col-sm-offset-4">
-<button class="btn btn-default" type="submit">Cancel</button>
 <input type="submit" name="submit" Value="Register" class="btn btn-primary">
 </div>
 </form>
@@ -201,7 +194,7 @@ return true;
 	<script src="js/main.js"></script>
 </body>
 	<script>
-function checkAvailability() {
+		function checkAvailability() {
 
 $("#loaderIcon").show();
 jQuery.ajax({
