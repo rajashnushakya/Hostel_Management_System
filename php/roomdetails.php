@@ -114,6 +114,9 @@
 </head>
 <body>
 <div class="container">
+    <!-- Cross button to go back to main.html -->
+    <a href="dashboard.html" class="cross-button">&#10006;</a>
+
     <h2>Room Details</h2>
     <table>
         <tr>
@@ -236,47 +239,33 @@
         });
     }
 
-    $('#editRoomForm').on('submit', function(e) {
+    $('#editRoomForm').submit(function(e) {
         e.preventDefault();
-        const id = $('#editId').val();
-        const roomName = $('#editRoomName').val();
-        const category = $('#editCategory').val();
-        const seater = $('#editSeater').val();
-        const fee = $('#editFee').val();
-
+        const formData = $(this).serialize();
         $.ajax({
-            url: 'update_room.php', // This PHP file will handle the update request
+            url: 'update_room.php', // This PHP file will update the room details
             type: 'POST',
-            data: {
-                id: id,
-                room_name: roomName,
-                category: category,
-                seater: seater,
-                fee: fee
-            },
+            data: formData,
             success: function(response) {
-                alert("Room details updated successfully!");
-                $('#editModal').modal('hide');
-                location.reload(); // Reload the page to see the updated details
+                location.reload(); // Reload the page to see the changes
             }
         });
     });
 
     function deleteRoom(button) {
         const id = button.getAttribute("data-id");
-        if (confirm("Are you sure you want to delete this room?")) {
+        $('#deleteModal').modal('show');
+        $('#deleteButton').off('click').on('click', function() {
             $.ajax({
-                url: 'delete_room.php', // This PHP file will handle the delete request
+                url: 'delete_room.php', // This PHP file will delete the room based on the ID
                 type: 'POST',
                 data: { id: id },
                 success: function(response) {
-                    alert(response);
-                    location.reload(); // Reload the page to see the updated details
+                    location.reload(); // Reload the page to see the changes
                 }
             });
-        }
+        });
     }
 </script>
-
 </body>
 </html>
