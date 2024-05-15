@@ -72,19 +72,19 @@
 
     // Add click event listeners to each button
     roomDetailsBtn.addEventListener("click", () => {
-        iframeContent.src = "roomdetails.html";
+        iframeContent.src = "residentroom.php";
         removeHighlight();
         roomDetailsBtn.classList.add("highlighted");
     });
 
     roomBookingBtn.addEventListener("click", () => {
-        iframeContent.src = "room_booking.html";
+        iframeContent.src = "roombooking.php";
         removeHighlight();
         roomBookingBtn.classList.add("highlighted");
     });
 
     paymentBtn.addEventListener("click", () => {
-        iframeContent.src = "payment.html";
+        iframeContent.src = "residentPayment.php";
         removeHighlight();
         paymentBtn.classList.add("highlighted");
     });
