@@ -80,7 +80,7 @@
         });
     
         paymentBtn.addEventListener("click", () => {
-            iframeContent.src = "payment.php";
+            iframeContent.src = "paymentdetails.php";
             removeHighlight();
             paymentBtn.classList.add("highlighted");
         });
