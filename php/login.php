@@ -33,14 +33,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $response['error'] = "Invalid Credentials";
                 }
                 break;
-            case 'Staff':
+            case 'staff':
                 $query = "SELECT * FROM staff WHERE email='$email' AND cpassword='$password'";
                 $result = $conn->query($query);
 
                 if ($result && $result->num_rows == 1) {
                     $_SESSION['loggedIn'] = true;
                     $_SESSION['role'] = $role;
-                    $response['redirect'] = "../php/staffDashboard.php";
+                    $response['redirect'] = "../php/staffdashboard.php";
                     $row = $result->fetch_assoc();
                     $response['user'] = array(
                         'email' => $row['email'],
