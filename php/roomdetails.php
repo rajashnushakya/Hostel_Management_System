@@ -239,33 +239,46 @@
         });
     }
 
-    $('#editRoomForm').submit(function(e) {
+    $('#editRoomForm').on('submit', function(e) {
         e.preventDefault();
-        const formData = $(this).serialize();
+        const id = $('#editId').val();
+        const roomName = $('#editRoomName').val();
+        const category = $('#editCategory').val();
+        const seater = $('#editSeater').val();
+        const fee = $('#editFee').val();
+
         $.ajax({
-            url: 'update_room.php', // This PHP file will update the room details
+            url: 'update_room.php', // This PHP file will handle the update request
             type: 'POST',
-            data: formData,
+            data: {
+                id: id,
+                room_name: roomName,
+                category: category,
+                seater: seater,
+                fee: fee
+            },
             success: function(response) {
-                location.reload(); // Reload the page to see the changes
+                alert("Room details updated successfully!");
+                $('#editModal').modal('hide');
+                location.reload(); // Reload the page to see the updated details
             }
         });
     });
-
     function deleteRoom(button) {
         const id = button.getAttribute("data-id");
-        $('#deleteModal').modal('show');
-        $('#deleteButton').off('click').on('click', function() {
+        if (confirm("Are you sure you want to delete this room?")) {
             $.ajax({
-                url: 'delete_room.php', // This PHP file will delete the room based on the ID
+                url: 'delete_room.php', // This PHP file will handle the delete request
                 type: 'POST',
                 data: { id: id },
                 success: function(response) {
-                    location.reload(); // Reload the page to see the changes
+                    alert(response);
+                    location.reload(); // Reload the page to see the updated details
                 }
             });
-        });
+        }
     }
+
 </script>
 </body>
 </html>
