@@ -26,7 +26,7 @@
             include('connection.php');
 
             // Fetch data from database
-            $query = "SELECT * FROM payments";
+            $query = "SELECT * FROM payment";
             $result = $mysqli->query($query);
 
             // Check if records exist
@@ -35,9 +35,9 @@
                 while ($row = $result->fetch_assoc()) {
                     echo "<tr>";
                     echo "<th scope='row'>" . $row['id'] . "</th>";
-                    echo "<td>" . $row['resident_name'] . "</td>";
-                    echo "<td>" . $row['room_number'] . "</td>";
-                    echo "<td>$" . $row['payment_amount'] . "</td>";
+                    echo "<td>" . $row['name'] . "</td>";
+                    echo "<td>" . $row['roomname'] . "</td>";
+                    echo "<td>$" . $row['fees'] . "</td>";
                     echo "</tr>";
                 }
             } else {
