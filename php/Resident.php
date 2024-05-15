@@ -5,19 +5,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Resident Dashboard</title>
-  <link rel="stylesheet" href="resident.css" />
+  <link rel="stylesheet" href="../css/resident.css" />
   
 </head>
 <body>
   <!-- for header part -->
   <header>
     <div>
-        <img class="nav-img1" src="Logo.png" alt="" />  
+        <img class="nav-img1" src="../img/Logo.png" alt="" />  
     </div>
     <div class="dropdown">
-      <img class="nav-img" src="user.png" alt="" />
+      <img class="nav-img" src="../img/user.png" alt="" />
       <div class="dropdown-content">
-        <p class="dropdown-item"><a href="../login.html">Logout</a></p>
+        <p class="dropdown-item"><a href="../html/index.html">Logout</a></p>
       </div>
     </div>
   </header>
@@ -28,7 +28,7 @@
         <div class="nav-upper-options">
           <div class="option1 nav-option">
             <img
-              src="icons8-room-50.png"
+              src="../img/icons8-room-50.png"
               class="nav-img"
               alt="Room details"
             />
@@ -36,7 +36,7 @@
           </div>
           <div class="option2 nav-option">
             <img
-              src="icons8-registration-50.png"
+              src="../img/icons8-registration-50.png"
               class="nav-img"
               alt="Room booking"
             />
@@ -44,7 +44,7 @@
           </div>
           <div class="nav-option option3">
             <img
-              src="icons8-payment-50.png"
+              src="../img/icons8-payment-50.png"
               class="nav-img"
               alt="Payment"
             />
@@ -53,7 +53,7 @@
         </div>
       </nav>
     </div>
-    <iframe id="iframe-content" src="roomdetails.html"></iframe>
+    <iframe id="iframe-content" src="../html/roomdetails.html"></iframe>
   </div>
   <script>
     // Get references to the buttons and the iframe
@@ -90,6 +90,6 @@
     });
 </script>
 
-  <script src="resident.js"></script>
+  <script src="../js/resident.js"></script>
 </body>
 </html>
