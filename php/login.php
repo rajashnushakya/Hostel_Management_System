@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($result && $result->num_rows == 1) {
                     $_SESSION['loggedIn'] = true;
                     $_SESSION['role'] = $role;
-                    $response['redirect'] = "../php/roombooking.php";
+                    $response['redirect'] = "../php/Resident.php";
                     $row = $result->fetch_assoc();
                     $response['user'] = array(
                         'email' => $row['email'],
