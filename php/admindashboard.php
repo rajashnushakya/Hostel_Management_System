@@ -16,7 +16,7 @@
     <div class="dropdown">
       <img class="nav-img" src="../img/user.png" alt="" />
       <div class="dropdown-content">
-        <p class="dropdown-item"><a href="../login.html">Logout</a></p>
+        <p class="dropdown-item"><a href="../html/index.html">Logout</a></p>
       </div>
     </div>
   </header>
