@@ -118,6 +118,8 @@ if ($conn->connect_error) {
     let selectedRoomId = null;
 
     document.addEventListener("DOMContentLoaded", () => {
+
+      const email = '<?php echo $_POST["email"]; ?>';
         const rows = document.querySelectorAll(".table tbody tr");
         rows.forEach(row => {
             row.addEventListener("click", () => {
