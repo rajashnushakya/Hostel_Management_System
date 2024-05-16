@@ -114,6 +114,9 @@
 </head>
 <body>
 <div class="container">
+    <!-- Cross button to go back to main.html -->
+    <a href="dashboard.html" class="cross-button">&#10006;</a>
+
     <h2>Room Details</h2>
     <table>
         <tr>
@@ -261,7 +264,6 @@
             }
         });
     });
-
     function deleteRoom(button) {
         const id = button.getAttribute("data-id");
         if (confirm("Are you sure you want to delete this room?")) {
@@ -276,7 +278,7 @@
             });
         }
     }
-</script>
 
+</script>
 </body>
 </html>
