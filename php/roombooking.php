@@ -119,7 +119,7 @@ if ($conn->connect_error) {
 
     document.addEventListener("DOMContentLoaded", () => {
 
-      const email = '<?php echo $_POST["email"]; ?>';
+
         const rows = document.querySelectorAll(".table tbody tr");
         rows.forEach(row => {
             row.addEventListener("click", () => {
