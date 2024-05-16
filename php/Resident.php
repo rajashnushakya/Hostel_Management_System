@@ -53,7 +53,7 @@
         </div>
       </nav>
     </div>
-    <iframe id="iframe-content" src="../html/roomdetails.html"></iframe>
+    <iframe id="iframe-content" src="../php/residentroom.php"></iframe>
   </div>
   <script>
     // Get references to the buttons and the iframe
@@ -84,7 +84,7 @@
     });
 
     paymentBtn.addEventListener("click", () => {
-        iframeContent.src = "residentPayment.php";
+        iframeContent.src = "../payment/index.php";
         removeHighlight();
         paymentBtn.classList.add("highlighted");
     });
