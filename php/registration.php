@@ -1,8 +1,14 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-include('connection.php');
+require 'PHPMailer/Exception.php';
+require 'PHPMailer/PHPMailer.php';
+require 'PHPMailer/SMTP.php';
+require 'connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
 $fname = $_POST['fname'];
 $mname = $_POST['mname'];
 $lname = $_POST['lname'];
@@ -12,6 +18,8 @@ $emailid = $_POST['email'];
 $password = $_POST['password'];
 $cpassword = $_POST['cpassword'];
 $role = $_POST['Role'];
+
+
 
 // Check if passwords match
 if ($password != $cpassword) {
@@ -29,12 +37,55 @@ if ($password != $cpassword) {
     
     // Execute the query
     if ($mysqli->query($query) === TRUE) {
-		echo "<script>alert('New record inserted successfully');</script>";
+		echo "<script>alert('Successfully inserted');</script>";
 	} else {
 		echo "<script>alert('Failed to insert new record');</script>";
 	}
 }
 $mysqli->close();
+sendEmail($emailid, $cpassword, $fname);
+}
+
+function sendEmail($emailid, $password, $fname) {
+	$mail = new PHPMailer(true);
+
+try {
+    // SMTP settings for Gmail
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'rajashnushakya@gmail.com'; 
+    $mail->Password = 'chuejenrgapnicmg'; 
+    $mail->SMTPSecure = 'tls';
+    $mail->Port = 587; 
+
+    // Email content
+    $mail->setFrom('rajashnushakya@gmail.com', 'Hostel Management System');
+    $mail->addAddress($emailid);
+    $mail->Subject = 'Login Credentials';
+    $mail->Body = "
+        Dear $fname,
+
+        We hope this email finds you well. As a user of our Hostel Management System (HMS), we are pleased to provide you with your login credentials to access the system:
+        
+        Username: $emailid
+        Password: $password
+        
+        Please keep your login credentials confidential and do not share them with anyone. If you have any questions or need assistance, feel free to reach out to our support team at sinchanhostel@gmail.com.
+        
+        Thank you for using our HMS platform. We look forward to serving you and ensuring a smooth experience.
+        
+        Best regards,
+        Sinchan Hostel
+        9813135096, 9766554888
+        Kathmandu, Nepal ";
+
+    // Send the email
+    $mail->send();
+    //echo 'Email sent successfully!';
+} catch (Exception $e) {
+    echo "Error sending email: {$mail->ErrorInfo}";
+}
 }
 ?>
 
@@ -50,24 +101,23 @@ $mysqli->close();
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
 	<title>Staff Registration</title>
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
-	<link rel="stylesheet" href="css/bootstrap-social.css">
-	<link rel="stylesheet" href="css/bootstrap-select.css">
-	<link rel="stylesheet" href="css/fileinput.min.css">
-	<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
-	<link rel="stylesheet" href="css/style.css">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
-<script type="text/javascript" src="js/validation.min.js"></script>
+	<link rel="stylesheet" href="../css/font-awesome.min.css">
+	<link rel="stylesheet" href="../css/bootstrap1.min.css">
+	<link rel="stylesheet" href="../css/dataTables.bootstrap.min.css">
+	<link rel="stylesheet" href="../css/bootstrap-social.css">
+	<link rel="stylesheet" href="../css/bootstrap-select.css">
+	<link rel="stylesheet" href="../css/fileinput.min.css">
+	<link rel="stylesheet" href="../css/less/awesome-bootstrap-checkbox.css">
+	<link rel="stylesheet" href="../css/less/style1.css">
+<script type="text/javascript" src="/Hostel_Management_System/js/jquery-1.11.3-jquery.min.js"></script>
+<script type="text/javascript" src="/Hostel_Management_System/js/validation.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
-	function valid()
+function valid()
 {
 if(document.registration.password.value!= document.registration.cpassword.value)
 {
-alert("Password and Re-Type Password Field do not match  !!");
+alert("Password and Confirm Password Field do not match  !!");
 document.registration.cpassword.focus();
 return false;
 }
@@ -76,6 +126,7 @@ return true;
 </script>
 </head>
 <body>
+
 		<div class="content-wrapper">
 			<div class="container-fluid">
 
@@ -87,9 +138,12 @@ return true;
 						<div class="row">
 							<div class="col-md-12">
 								<div class="panel panel-primary">
+									<div class="panel-heading">HMS</div>
 									<div class="panel-body">
 			<form method="post" action="" name="registration" class="form-horizontal" onSubmit="return valid();">
 											
+										
+
 
 <div class="form-group">
 <label class="col-sm-2 control-label">First Name : </label>
@@ -113,18 +167,16 @@ return true;
 </div>
 
 <div class="form-group">
-	<label class="col-sm-2 control-label">Contact No : </label>
-	<div class="col-sm-8">
-	<input type="text" name="contact" id="contact"  class="form-control" required="required">
-	</div>
-	</div>
-
-	<div class="form-group">
-		<label class="col-sm-2 control-label">Gender : </label>
-		<div class="col-sm-8">
-		<input type="text" name="gender" id="gender"  class="form-control" required="required">
-		</div>
-		</div>
+<label class="col-sm-2 control-label">Gender : </label>
+<div class="col-sm-8">
+<select name="gender" class="form-control" required="required">
+<option value="">Select Gender</option>
+<option value="male">Male</option>
+<option value="female">Female</option>
+<option value="others">Others</option>
+</select>
+</div>
+</div>
 
 <div class="form-group">
 <label class="col-sm-2 control-label">Role : </label>
@@ -137,7 +189,12 @@ return true;
 </div>
 </div>
 
-
+<div class="form-group">
+<label class="col-sm-2 control-label">Contact No : </label>
+<div class="col-sm-8">
+<input type="text" name="contact" id="contact"  class="form-control" required="required">
+</div>
+</div>
 
 
 <div class="form-group">
@@ -167,7 +224,10 @@ return true;
 
 
 <div class="col-sm-6 col-sm-offset-4">
-<input type="submit" name="submit" Value="Register" class="btn btn-primary">
+    <button class="btn btn-default" type="button">Cancel</button>
+    <input type="submit" formaction="" name="submit" value="Register" class="btn btn-primary">
+</div>
+
 </div>
 </form>
 
@@ -191,10 +251,10 @@ return true;
 	<script src="js/Chart.min.js"></script>
 	<script src="js/fileinput.js"></script>
 	<script src="js/chartData.js"></script>
-	<script src="js/main.js"></script>
+	<script src="js/main1.js"></script>
 </body>
 	<script>
-		function checkAvailability() {
+function checkAvailability() {
 
 $("#loaderIcon").show();
 jQuery.ajax({
