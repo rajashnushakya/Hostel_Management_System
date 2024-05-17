@@ -17,7 +17,7 @@
     <div class="dropdown">
       <img class="nav-img" src="../img/user.png" alt="" />
       <div class="dropdown-content">
-        <p class="dropdown-item"><a href="../html/index.html">Logout</a></p>
+        <p class="dropdown-item" ><a href="../html/index.html"  onclick="logout()>Logout</a></p>
       </div>
     </div>
   </header>
@@ -79,6 +79,11 @@
         });
     }
 
+    function logout() {
+      localStorage.clear(); // Clear local storage
+      window.location.href = "../html/index.html"; // Redirect to login page
+    }
+    
     // Add click event listeners to each button
     roomDetailsBtn.addEventListener("click", () => {
         iframeContent.src = "residentroom.php";
