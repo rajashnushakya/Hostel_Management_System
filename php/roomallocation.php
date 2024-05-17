@@ -69,14 +69,13 @@ if (!$result) {
                     while ($innerRow = $innerResult->fetch_assoc()) {
                         echo "<tr>";
                         echo "<td>" . $innerRow['booking_id'] . "</td>"; // Display booking ID
-
                         echo "<td>" . $innerRow['resident_name'] . "</td>";
                         echo "<td>" . $innerRow['room_name'] . "</td>";
                         echo "</tr>";
                     }
                 } else {
                     // If no records found in inner query
-                    echo "<tr><td colspan='3'>No Booking Details</td></tr>";
+                   
                 }
             } else {
                 // Inner query error
