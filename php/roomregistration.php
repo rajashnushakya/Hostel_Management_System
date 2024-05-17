@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     $fee = $_POST['fee'];
 
     // SQL query to insert data into database
-    $query = "INSERT INTO rooms (room_number, room_name, category, seater, fee) VALUES (?, ?, ?, ?, ?)";
+    $query = "INSERT INTO rooms (id, room_name, category, seater, fee) VALUES (?, ?, ?, ?, ?)";
     $stmt = $mysqli->prepare($query);
 
     // Bind parameters
