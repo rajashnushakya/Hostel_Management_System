@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         'role' => $role
                     );
                 } else {
-                    $response['error'] = "Invalid Credentials";
+                    $response['error'] = "Invalid Admin Credentials";
                 }
                 break;
             case 'staff':
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         'role' => $role,
                     );
                 } else {
-                    $response['error'] = "Invalid Credentials";
+                    $response['error'] = "Invalid Staff Credentials"; // Validation message for staff login
                 }
                 break;
             case 'user':
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         'role' => $role,
                     );
                 } else {
-                    $response['error'] = "Invalid Credentials";
+                    $response['error'] = "Invalid User Credentials"; // Validation message for user login
                 }
                 break;
             default:
