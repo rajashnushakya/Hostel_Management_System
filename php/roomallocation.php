@@ -152,7 +152,6 @@ $mysqli->close();
     <div class="row justify-content-center">
         <div class="col-md-6 text-center">
             <button type="submit" class="btn btn-primary btn-sm me-2">Submit</button>
-            <button type="button" class="btn btn-secondary btn-sm">Back</button>
         </div>
     </div>
 </form>
