@@ -122,7 +122,7 @@ return true;
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Gender : </label>
 		<div class="col-sm-8">
-		<input type="text" name="contact" id="contact"  class="form-control" required="required">
+		<input type="text" name="gender" id="gender"  class="form-control" required="required">
 		</div>
 		</div>
 
