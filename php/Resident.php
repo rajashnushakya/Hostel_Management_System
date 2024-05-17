@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Resident Dashboard</title>
   <link rel="stylesheet" href="../css/resident.css" />
-  
 </head>
 <body>
   <!-- for header part -->
@@ -17,7 +16,7 @@
     <div class="dropdown">
       <img class="nav-img" src="../img/user.png" alt="" />
       <div class="dropdown-content">
-        <p class="dropdown-item" ><a href="../html/index.html"  onclick="logout()>Logout</a></p>
+        <p class="dropdown-item"><a href="../html/index.html" onclick="logout()">Logout</a></p>
       </div>
     </div>
   </header>
@@ -79,11 +78,11 @@
         });
     }
 
+    // Function to logout and clear localStorage
     function logout() {
-      localStorage.clear(); // Clear local storage
-      window.location.href = "../html/index.html"; // Redirect to login page
+        localStorage.clear();
     }
-    
+
     // Add click event listeners to each button
     roomDetailsBtn.addEventListener("click", () => {
         iframeContent.src = "residentroom.php";
@@ -108,7 +107,7 @@
         removeHighlight();
         paymentBtn.classList.add("highlighted");
     });
-</script>
+  </script>
 
   <script src="../js/resident.js"></script>
 </body>
