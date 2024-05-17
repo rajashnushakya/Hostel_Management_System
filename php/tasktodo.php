@@ -10,7 +10,7 @@
     <title>To do task</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
-        /* Your custom CSS styles */
+
         .container {
             padding: 20px;
         }
@@ -52,11 +52,11 @@
                                             echo "<tr>";
                                             echo "<td>" . $row['id'] . "</td>";
                                             echo "<td>" . $row['request_text'] . "</td>";
-                                            echo "<td><button onclick=\"markAsDone(this, '" . $row['id'] . "')\">Done</button></td>"; // Pass task ID to markAsDone function
+                                            echo "<td><button onclick=\"markAsDone(this, '" . $row['id'] . "')\">Done</button></td>"; 
                                             echo "</tr>";
                                         }
                                     } else {
-                                        echo "<tr><td colspan='3'>No tasks found</td></tr>"; // Corrected colspan value
+                                        echo "<tr><td colspan='3'>No tasks found</td></tr>"; 
                                     }
                                     ?>
                                     </tbody>
