@@ -115,7 +115,7 @@
 <body>
 <div class="container">
     <!-- Cross button to go back to dashboard.html -->
-    <a href="dashboard.html" class="cross-button">&#10006;</a>
+    <a href="dashboard.php" class="cross-button">&#10006;</a>
 
     <h2>Staff Details</h2>
     <table>
