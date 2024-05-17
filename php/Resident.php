@@ -42,6 +42,14 @@
             />
             <h3>Room booking</h3>
           </div>
+          <div class="option4 nav-option">
+            <img
+              src="../img/icons8-shouting-50.png"
+              class="nav-img"
+              alt="Room booking"
+            />
+            <h3>Request</h3>
+          </div>
           <div class="nav-option option3">
             <img
               src="../img/icons8-payment-50.png"
@@ -60,6 +68,7 @@
     const roomDetailsBtn = document.querySelector(".option1");
     const roomBookingBtn = document.querySelector(".option2");
     const paymentBtn = document.querySelector(".option3");
+    const requestBtn = document.querySelector(".option4");
     const iframeContent = document.getElementById("iframe-content");
 
     // Function to remove highlight from all options
@@ -81,6 +90,12 @@
         iframeContent.src = "roombooking.php";
         removeHighlight();
         roomBookingBtn.classList.add("highlighted");
+    });
+
+    requestBtn.addEventListener("click", () => {
+        iframeContent.src = "request.php";
+        removeHighlight();
+        requestBtn.classList.add("highlighted");
     });
 
     paymentBtn.addEventListener("click", () => {
