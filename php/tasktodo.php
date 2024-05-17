@@ -15,7 +15,7 @@
       padding: 20px;
     }
     .mb-3-custom {
-      margin-bottom: 1.5rem; /* Adjust as needed */
+      margin-bottom: 1.5rem; 
     }
     .table {
       margin-top: 20px;
