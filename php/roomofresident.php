@@ -6,7 +6,6 @@
   <title>Styled Room Detail</title>
   <!-- Importing fonts from Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Patua+One|Open+Sans" rel="stylesheet">
-  <!-- Importing Compass mixins for CSS3 -->
   <style>
     @import "compass/css3";
 
@@ -59,9 +58,56 @@
 <body>
   <div class="room-details">
     <h1>Room Detail</h1>
-    <p><span>Room Name:</span> KATHMANDU</p>
-    <p><span>Room ID:</span> 23</p>
-    <p><span>Room Seater:</span> RAJASHNU</p>
+    <p><span>Resident Name:</span> <span id="residentName"></span></p>
+    <p><span>Room Name:</span> <span id="roomName"></span></p>
+    <p><span>Room ID:</span> <span id="roomId"></span></p>
+    <p><span>Room Seater:</span> <span id="roomSeater"></span></p>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const email = localStorage.getItem('email');
+      if (!email) {
+        console.error('Email not found in local storage');
+        return;
+      }
+
+      fetch('getresidentId.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('getresidentId.php response:', data);
+        if (data.success) {
+          fetch('fetch_room_details.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ residentId: data.residentId })
+          })
+          .then(response => response.json())
+          .then(roomData => {
+            console.log('fetch_room_details.php response:', roomData);
+            if (roomData.success) {
+              document.getElementById('residentName').innerText = roomData.residentName;
+              document.getElementById('roomName').innerText = roomData.roomName;
+              document.getElementById('roomId').innerText = roomData.roomId;
+              document.getElementById('roomSeater').innerText = roomData.roomSeater;
+            } else {
+              alert('Room allocation not found'); // Display pop-up alert
+              console.error(roomData.error);
+            }
+          });
+        } else {
+          console.error(data.error);
+        }
+      });
+    });
+  </script>
 </body>
 </html>
