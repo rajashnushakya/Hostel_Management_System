@@ -48,15 +48,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Collect form data
-    $requestDescription = $_POST["request_description"];
+    $email = $_POST['email'];
 
-    // Insert each selected checkbox value into the database
-    foreach ($selectedCheckboxes as $checkboxValue) {
-        $sql = "INSERT INTO request (request_text) VALUES ('$checkboxValue')";
-        
-        if ($conn->query($sql) !== TRUE) {
-            echo "Error: " . $sql . "<br>" . $conn->error;
+    // Get resident id based on email
+    $sql = "SELECT id FROM resident WHERE email = '$email'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $residentId = $row['id'];
+
+        // Get roomid from roomallocated table based on resident id
+        $sql = "SELECT roomid FROM roomallocated WHERE residentid = '$residentId'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $roomid = $row['roomid'];
+
+            // Insert each selected checkbox value into the request table
+            foreach ($selectedCheckboxes as $checkboxValue) {
+                $sql = "INSERT INTO request (request_text) VALUES ('$checkboxValue')";
+                
+                if ($conn->query($sql) === TRUE) {
+                    $requestId = $conn->insert_id; // Get the last inserted request ID
+
+                    // Insert into resreq table
+                    $sql = "INSERT INTO resreq (roomid, residentid, requestid) VALUES ('$roomid', '$residentId', '$requestId')";
+                    if ($conn->query($sql) !== TRUE) {
+                        echo "Error inserting into resreq: " . $conn->error;
+                    }
+                } else {
+                    echo "Error inserting request: " . $conn->error;
+                }
+            }
+        } else {
+            echo "No room allocated for the resident.";
         }
+    } else {
+        echo "No resident found with the provided email.";
     }
 
     // Show success message if there were no errors
@@ -68,6 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Close connection
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -129,16 +160,10 @@ $conn->close();
             </li>
         
           </ul>
-
-          <div class="mb-3">
-            <label for="requestDescription" class="form-label">Request Description</label>
-            <textarea class="form-control" id="requestDescription" name="request_description" rows="3"></textarea>
-        </div>
-
-      <div class="row justify-content-center">
+          <div class = "mb-5"></div>
+      <div class="mb-5 row justify-content-center">
         <div class="col-md-6 text-center">
           <button type="submit" class="btn btn-primary btn-sm me-2">Submit</button>
-          <button type="button" class="btn btn-secondary btn-sm">Back</button>
         </div>
       </div>
 
@@ -147,6 +172,36 @@ $conn->close();
   
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Assuming email is stored in localStorage
+    const email = localStorage.getItem('email');
+    if (email) {
+        document.getElementById('email').value = email;
+
+        // Fetch resident ID based on email
+        fetch('getResidentId.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('residentId').value = data.residentId;
+            } else {
+                alert(data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    } else {
+        alert('No email found in localStorage');
+    }
+  </script>
+  </script>
 
 </body>
 </html>
