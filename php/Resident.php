@@ -60,7 +60,7 @@
         </div>
       </nav>
     </div>
-    <iframe id="iframe-content" src="../php/residentroom.php"></iframe>
+    <iframe id="iframe-content" src="../php/roomofresident.php"></iframe>
   </div>
   <script>
     // Get references to the buttons and the iframe
