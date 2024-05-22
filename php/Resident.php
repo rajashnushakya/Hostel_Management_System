@@ -85,7 +85,7 @@
 
     // Add click event listeners to each button
     roomDetailsBtn.addEventListener("click", () => {
-        iframeContent.src = "residentroom.php";
+        iframeContent.src = "roomofresident.php";
         removeHighlight();
         roomDetailsBtn.classList.add("highlighted");
     });
