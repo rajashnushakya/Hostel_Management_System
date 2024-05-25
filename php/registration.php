@@ -108,7 +108,7 @@ try {
 	<link rel="stylesheet" href="../css/bootstrap-select.css">
 	<link rel="stylesheet" href="../css/fileinput.min.css">
 	<link rel="stylesheet" href="../css/less/awesome-bootstrap-checkbox.css">
-	<link rel="stylesheet" href="../css/less/style1.css">
+	<link rel="stylesheet" href="../css/style1.css">
 <script type="text/javascript" src="/Hostel_Management_System/js/jquery-1.11.3-jquery.min.js"></script>
 <script type="text/javascript" src="/Hostel_Management_System/js/validation.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
