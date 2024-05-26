@@ -13,7 +13,7 @@
     <header>
         <div>
             <img class="nav-img1" src="../img/Logo.png" alt="Logo" />
-        </div>p
+        </div>
         <div class="dropdown">
             <img class="nav-img" src="../img/user.png" alt="" />
             <div class="dropdown-content">
